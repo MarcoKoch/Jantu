@@ -42,6 +42,26 @@ namespace Jantu
             }
         }
 
+        public Tile Above
+        {
+            get { return (0 < _posY) ? _world[_posX, _posY - 1] : null; }
+        }
+
+        public Tile Below
+        {
+            get { return ((_world.Height - 1) > _posY) ? _world[_posX, _posY + 1] : null; }
+        }
+
+        public Tile Left
+        {
+            get { return (0 < _posX) ? _world[_posX - 1, _posY] : null; }
+        }
+
+        public Tile Right
+        {
+            get { return ((_world.Width - 1) < _posX) ? _world[_posX + 1, _posY] : null; }
+        }
+
         public Tile(World world, uint x, uint y)
         {
             _world = world;
