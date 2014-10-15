@@ -2,7 +2,7 @@
 {
     class FoodKind
     {
-        string Name;
-        char Symbol;
+        public string Name;
+        public char Symbol;
     }
 }
