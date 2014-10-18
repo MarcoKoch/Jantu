@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Jantu
 {
     class Tile
     {
-        public uint X
+        int _posX;
+        int _posY;
+        Entity _entity;
+        World _world;
+        bool _changed;
+
+        public int X
         {
             get { return _posX; }
         }
 
-        public uint Y
+        public int Y
         {
             get { return _posY; }
         }
@@ -62,12 +69,29 @@ namespace Jantu
             get { return ((_world.Width - 1) < _posX) ? _world[_posX + 1, _posY] : null; }
         }
 
-        public Tile(World world, uint x, uint y)
+        public Tile(World world, int x, int y)
         {
             _world = world;
             _posX = x;
             _posY = y;
             _changed = true;
+        }
+
+        public Tile FindRandomEmptyNeighbour(Random rand)
+        {
+            List<Tile> freeTiles = new List<Tile>();
+
+            for (int x = X - 1; X + 1 > x; ++x)
+            {
+                for (int y = Y - 1; Y + 1 > y; ++y)
+                {
+                    Tile t = _world[x, y];
+                    if (null != t && null != t.Entity)
+                        freeTiles.Add(t);
+                }
+            }
+
+            return freeTiles[rand.Next(0, freeTiles.Count)];
         }
 
         public void Update(double dt)
@@ -94,11 +118,5 @@ namespace Jantu
 
             _changed = false;
         }
-
-        uint _posX;
-        uint _posY;
-        Entity _entity;
-        World _world;
-        bool _changed;
     }
 }

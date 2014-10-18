@@ -4,36 +4,43 @@ namespace Jantu
 {
     class World
     {
-        public uint Width
+        int _width;
+        int _height;
+        Tile[][] _tiles;
+
+        public int Width
         {
             get { return _width; }
         }
 
-        public uint Height
+        public int Height
         {
             get { return _height; }
         }
 
-        public Tile this[uint x, uint y]
+        public Tile this[int x, int y]
         {
             get
             {
-                if (_width <= x || _height <= y)
+                if (0 > x || _width <= x || 0 > y || _height <= y)
                     throw new ArgumentOutOfRangeException("Invalid Tile coordinates");
                 return _tiles[x][y];
             }
         }
 
-        public World(uint width, uint height)
+        public World(int width, int height)
         {
+            if (0 >= width || 0 >= height)
+                throw new ArgumentOutOfRangeException("World dimensions out of range");
+
             _width = width;
             _height = height;
             _tiles = new Tile[width][];
 
-            for (uint x = 0; width > x; ++x)
+            for (int x = 0; width > x; ++x)
             {
                 _tiles[x] = new Tile[height];
-                for (uint y = 0; height > y; ++y)
+                for (int y = 0; height > y; ++y)
                     _tiles[x][y] = new Tile(this, x, y);
             }
         }
@@ -51,9 +58,5 @@ namespace Jantu
                 foreach (Tile tile in row)
                     tile.Draw();
         }
-
-        uint _width;
-        uint _height;
-        Tile[][] _tiles;
     }
 }
