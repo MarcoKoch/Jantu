@@ -8,10 +8,8 @@ namespace Jantu
 {
     class Showbar
     {
-        private uint _Height;
-        private uint _Length;
-        private uint _PosX;
-        private uint _PosY;
+//        private uint _PosX;
+//        private uint _PosY;
         private char _Border;
         private uint _Width;
         private char _Border2;
@@ -26,8 +24,8 @@ namespace Jantu
         {
 
             _Width = 20;
-            _PosX = (uint)Console.WindowWidth - _Width;
-            _PosY = 0;
+//            _PosX = (uint)Console.WindowWidth - _Width;
+//            _PosY = 0;
             _Border = '│';
             _Border2 = '─';
             _Border3 = '┌';
@@ -88,32 +86,6 @@ namespace Jantu
                 }
 
             }
-            /*
-                for (int i = 0; i < _Width; i++)
-                {
-                    for (int j = 0; j < Console.WindowHeight; j++)
-                    {
-                        Console.SetCursorPosition(i + (Console.WindowWidth - (int)_Width), (int)j);
-                        if (i == 0 || i == _Width - 1)
-                        {
-                            Console.Write(_Border);
-                            continue;
-                        }
-                        if (j == 0 || j == Console.WindowHeight - 1 || j == Console.WindowHeight / 2)
-                        {
-                            Console.Write(_Border2);
-                        }
-                        if (i == 0 && j == 0)
-                        {
-                            Console.Write(_Border3);
-                        }
-                        if (i == 0 && j == Console.WindowHeight - 1)
-                        {
-                            Console.Write(_Border5);
-                        }
-                    }
-                }
-             */
         }
     }
 }
