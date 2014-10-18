@@ -1,37 +1,64 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Jantu
 {
-    class SpeciesManager
+    [Serializable()]
+    class SpeciesManager : ISerializable
     {
-        List<Species> _normalSpecies;
-        List<Species> _specialSpecies;
+        public SpeciesManager()
+        {
+            _normalSpecies = new Dictionary<string, Species>();
+            _specialSpecies = new Dictionary<string, Species>();
+        }
+
+        public SpeciesManager(SerializationInfo info, StreamingContext ctx)
+        {
+            List<Species> normalSpecies = (List<Species>)info.GetValue(
+                "NormalSpeciesData", typeof(List<Species>));
+            _normalSpecies = new Dictionary<string, Species>();
+            foreach (Species s in normalSpecies)
+                _normalSpecies[s.Name] = s;
+
+            List<Species> specialSpecies = (List<Species>)info.GetValue(
+                "SpecialSpeciesData", typeof(List<Species>));
+            _specialSpecies = new Dictionary<string, Species>();
+            foreach (Species s in specialSpecies)
+                _specialSpecies[s.Name] = s;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctx)
+        {
+            info.AddValue("NormalSpeciesData", Enumerable.ToList(_normalSpecies.Values));
+            info.AddValue("SpecialSpeciesData", Enumerable.ToList(_specialSpecies.Values));
+        }
 
         public void Add(Species species)
         {
-            if (!_normalSpecies.Exists(s => s == species))
-                _normalSpecies.Add(species);
+            _normalSpecies.Add(species.Name, species);
         }
 
         public void AddSpecial(Species species)
         {
-            if (!_specialSpecies.Exists(s => s == species))
-                _specialSpecies.Add(species);
+            _specialSpecies.Add(species.Name, species);
         }
 
         public Species GetByName(string name)
         {
-            Species species = _normalSpecies.Find(s => s.Name.Equals(name));
-            if (null == species)
-                species = _specialSpecies.Find(s => s.Name.Equals(name));
-
-            return species;
+            if (_normalSpecies.ContainsKey(name))
+                return _normalSpecies[name];
+            return _specialSpecies[name];
         }
 
         public Species GetRandomSpecialSpecies(Random rand)
         {
-            return _specialSpecies[rand.Next(0, _specialSpecies.Count)];
+            List<Species> species = Enumerable.ToList(_specialSpecies.Values);
+            return species[rand.Next(0, species.Count)];
         }
+
+        Dictionary<string, Species> _normalSpecies;
+        Dictionary<string, Species> _specialSpecies;
     }
 }

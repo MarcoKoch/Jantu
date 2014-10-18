@@ -9,7 +9,6 @@ namespace Jantu
     class Game
     {
         private World _world;
-
         private int _cash;
 
 
