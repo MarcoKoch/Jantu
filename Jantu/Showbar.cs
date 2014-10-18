@@ -11,14 +11,14 @@ namespace Jantu
 //        private uint _PosX;
 //        private uint _PosY;
         private char _Border;
-        private uint _Width;
+        private int  _Width;
         private char _Border2;
         private char _Border3;
         private char _Border4;
         private char _Border5;
         private char _Border6;
       
-
+        public int Width { get { return _Width; }}
 
         public Showbar()
         {

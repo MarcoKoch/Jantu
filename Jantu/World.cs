@@ -52,7 +52,7 @@ namespace Jantu
                     tile.Update(dt);
         }
 
-        public void Draw(double dt)
+        public void Draw()
         {
             foreach (Tile[] row in _tiles)
                 foreach (Tile tile in row)
