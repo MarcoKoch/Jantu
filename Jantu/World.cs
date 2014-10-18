@@ -23,7 +23,7 @@ namespace Jantu
             get
             {
                 if (0 > x || _width <= x || 0 > y || _height <= y)
-                    throw new ArgumentOutOfRangeException("Invalid Tile coordinates");
+                    throw new ArgumentOutOfRangeException("Tile coordinates");
                 return _tiles[x][y];
             }
         }
@@ -31,7 +31,7 @@ namespace Jantu
         public World(int width, int height)
         {
             if (0 >= width || 0 >= height)
-                throw new ArgumentOutOfRangeException("World dimensions out of range");
+                throw new ArgumentOutOfRangeException("World dimensions");
 
             _width = width;
             _height = height;
