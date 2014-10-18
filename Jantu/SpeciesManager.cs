@@ -18,15 +18,11 @@ namespace Jantu
         {
             List<Species> normalSpecies = (List<Species>)info.GetValue(
                 "NormalSpeciesData", typeof(List<Species>));
-            _normalSpecies = new Dictionary<string, Species>();
-            foreach (Species s in normalSpecies)
-                _normalSpecies[s.Name] = s;
+            _normalSpecies = Enumerable.ToDictionary(normalSpecies, s => s.Name);
 
             List<Species> specialSpecies = (List<Species>)info.GetValue(
                 "SpecialSpeciesData", typeof(List<Species>));
-            _specialSpecies = new Dictionary<string, Species>();
-            foreach (Species s in specialSpecies)
-                _specialSpecies[s.Name] = s;
+            _specialSpecies = Enumerable.ToDictionary(specialSpecies, s => s.Name);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctx)

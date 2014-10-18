@@ -17,9 +17,7 @@ namespace Jantu
         {
             List<FoodKind> kinds = (List<FoodKind>)info.GetValue(
                 "FoodKindData", typeof(List<FoodKind>));
-            _kinds = new Dictionary<string, FoodKind>();
-            foreach (FoodKind k in kinds)
-                _kinds[k.Name] = k;
+            _kinds = Enumerable.ToDictionary(kinds, k => k.Name);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctx)
