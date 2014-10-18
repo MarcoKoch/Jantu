@@ -55,6 +55,7 @@
     <Compile Include="World.cs" />
     <Compile Include="FoodKindManager.cs" />
     <Compile Include="DataManager.cs" />
+    <Compile Include="AnimalEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

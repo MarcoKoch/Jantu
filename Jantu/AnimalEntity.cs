@@ -13,19 +13,36 @@ namespace Jantu
             get { return _species;}
         }
 
+        public uint Hunger
+        {
+            get { return _hunger; }
+            set { _hunger = value; }
+        }
+
+        public uint Health
+        {
+            get { return _health; }
+            set
+            {
+                _health = value;
+                if (0 == _health)
+                    Tile = null; // animal died
+            }
+        }
+
         public AnimalEntity(Species species)
         {
             _species = species;
         }
 
-        public AnimalEntity TryBreedWith(AnimalEntity other, Random rand)
+        public AnimalEntity TryBreedWith(AnimalEntity other, SpeciesManager allSpecies, Random rand)
         {
             if (!Species.BreedsWith(other.Species))
                 throw new InvalidOperationException("Trying to breed incompatible enemy types");
             
             Tile newAnimalTile = Tile.FindRandomEmptyNeighbour(rand);
             if (null != newAnimalTile)
-                return new AnimalEntity(Species.BreedWith(other.Species, rand));            
+                return new AnimalEntity(Species.BreedWith(other.Species, allSpecies, rand));
 
             return null;
         }
