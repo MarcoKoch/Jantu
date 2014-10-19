@@ -4,44 +4,105 @@ using System.Runtime.Serialization;
 
 namespace Jantu
 {
+    /// <summary>
+    /// Describes a species of animals.
+    /// </summary>
+    /// <remarks>
+    /// This is an abstract description only. Actual animals that can be
+    /// seen on screen are described by <see cref="Jantu.AnimalEntity"/>.
+    /// </remarks>
 	[Serializable()]
     class Species : ISerializable
     {
+        string _name;
+        double _movingSpeed;
+        double _excrementRate;
+        double _foodRate;
+        double _mutationProbability;
+        int _maxHealth;
+        char _symbol;
+        List<FoodKind> _food;
+        List<Species> _preys;
+        List<Species> _enemies;
+        List<Species> _breedingPartners;
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name
         {
             get { return _name; }
         }
 
+        /// <summary>
+        /// Gets or sets the max health.
+        /// </summary>
+        /// <value>
+        /// The max health.
+        /// </value>
         public int MaxHealth
         {
             get { return _maxHealth; }
             set { _maxHealth = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the moving speed.
+        /// </summary>
+        /// <value>
+        /// The moving speed.
+        /// </value>
         public double MovingSpeed
         {
             get { return _movingSpeed; }
             set { _mutationProbability = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the excrement rate.
+        /// </summary>
+        /// <value>
+        /// The excrement rate.
+        /// </value>
         public double ExcrementRate
         {
             get { return _excrementRate; }
             set { _excrementRate = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the food rate.
+        /// </summary>
+        /// <value>
+        /// The food rate.
+        /// </value>
         public double FoodRate
         {
             get { return _foodRate; }
             set { _foodRate = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the symbol.
+        /// </summary>
+        /// <value>
+        /// The symbol.
+        /// </value>
         public char Symbol
         {
             get { return _symbol; }
             set { _symbol = value; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Jantu.Species"/> class.
+        /// </summary>
+        /// <param name='name'>
+        /// Name.
+        /// </param>
         public Species(string name)
         {
             _name = name;
@@ -51,6 +112,16 @@ namespace Jantu
             _breedingPartners = new List<Species>();
         }
 		
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Jantu.Species"/> class
+        /// from serialized data.
+        /// </summary>
+        /// <param name='info'>
+        /// Info.
+        /// </param>
+        /// <param name='ctx'>
+        /// Context.
+        /// </param>
 		public Species(SerializationInfo info, StreamingContext ctx)
 		{
 			_name = (string)info.GetValue("Name", typeof(string));
@@ -88,6 +159,15 @@ namespace Jantu
                 _breedingPartners.Add(data.Species.GetByName(breedingPartnerName));
 		}
 		
+        /// <summary>
+        /// Serielizes the object.
+        /// </summary>
+        /// <param name='info'>
+        /// Info.
+        /// </param>
+        /// <param name='ctx'>
+        /// Context.
+        /// </param>
 		public void GetObjectData(SerializationInfo info, StreamingContext ctx)
 		{
 			info.AddValue("Name", _name);
@@ -121,30 +201,77 @@ namespace Jantu
             info.AddValue("BreedingPartners", breedingPartnerNames);
 		}
 
+        /// <summary>
+        /// Returns whether animals of this species eat the given type of food.
+        /// </summary>
+        /// <param name='food'>
+        /// Type of food.
+        /// </param>
         public bool Eats(FoodKind food)
         {
             // The comparision by object identity is intentional!
             return _food.Exists(k => k == food);
         }
 
+        /// <summary>
+        /// Returns whether animasl of this species eat animals of the given
+        /// other species.
+        /// </summary>
+        /// <param name='species'>
+        /// An other species.
+        /// </param>
         public bool Eats(Species species)
         {
             // The comparision by object identity is intentional!
             return _preys.Exists(s => s == species);
         }
 
+        /// <summary>
+        /// Returns whether animals of this species attack animals of the
+        /// given other species.
+        /// </summary>
+        /// <param name='species'>
+        /// An other species.
+        /// </param>
         public bool Attacks(Species species)
         {
             // The comparision by object identity is intentional!
             return _enemies.Exists(s => s == species);
         }
 
+        /// <summary>
+        /// Returns whether animals of this species will breed with animals
+        /// of the given other species.
+        /// </summary>
+        /// <param name='species'>
+        /// An other species.
+        /// </param>
         public bool BreedsWith(Species species)
         {
             // The comparision by object identity is intentional!
             return _breedingPartners.Exists(s => s == species);
         }
 
+        /// <summary>
+        /// Returns the species that results if an animal of this species breeds
+        /// with an animal of the given other species.
+        /// </summary>
+        /// <remarks>
+        /// This may create a new species. If this happens, the new species is added
+        /// to <c>allSpecies</c>.
+        /// </remarks>
+        /// <returns>
+        /// The resulting species.
+        /// </returns>
+        /// <param name='other'>
+        /// An other species.
+        /// </param>
+        /// <param name='allSpecies'>
+        /// All species.
+        /// </param>
+        /// <param name='rand'>
+        /// Random number generator to be used.
+        /// </param>
         public Species BreedWith(Species other, SpeciesManager allSpecies, Random rand)
         {
             // Comparision by object identity is intentional!
@@ -178,17 +305,5 @@ namespace Jantu
 
             return retval;
         }
-		
-		string _name;
-        double _movingSpeed;
-        double _excrementRate;
-        double _foodRate;
-        double _mutationProbability;
-        int _maxHealth;
-        char _symbol;
-        List<FoodKind> _food;
-        List<Species> _preys;
-        List<Species> _enemies;
-        List<Species> _breedingPartners;
     }
 }

@@ -3,6 +3,14 @@ using System.Collections.Generic;
 
 namespace Jantu
 {
+    /// <summary>
+    /// Represents a tile in the world.
+    /// </summary>
+    /// <remarks>
+    /// A tile is displayed as a single character on the console. Each tile can
+    /// hold either none or a single entity. If present, that entity is drawn at the
+    /// location of the tile.
+    /// </remarks>
     class Tile
     {
         int _posX;
@@ -11,21 +19,50 @@ namespace Jantu
         World _world;
         bool _changed;
 
+        /// <summary>
+        /// Gets the x coordinate of the tile.
+        /// </summary>
+        /// <value>
+        /// The x coordinate.
+        /// </value>
         public int X
         {
             get { return _posX; }
         }
 
+        /// <summary>
+        /// Gets the y coordinate of the tile.
+        /// </summary>
+        /// <value>
+        /// The y coordinate.
+        /// </value>
         public int Y
         {
             get { return _posY; }
         }
 
+        /// <summary>
+        /// Gets the world of which the tile is part.
+        /// </summary>
+        /// <value>
+        /// The world of which the tile is part.
+        /// </value>
         public World World
         {
             get { return _world; }
         }
 
+        /// <summary>
+        /// Gets or sets the entity that is placed on the tile.
+        /// </summary>
+        /// <remarks>
+        /// Assigning <c>null</c> removes the current entity from
+        /// the tile. Assigning an entity that is already on an other
+        /// tile, will move that entity.
+        /// </remarks>
+        /// <value>
+        /// The entity, if any. <c>null</c> otherwise.
+        /// </value>
         public Entity Entity
         {
             get { return _entity; }
@@ -49,26 +86,66 @@ namespace Jantu
             }
         }
 
+        /// <summary>
+        /// Gets the tile above <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile above <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the top row of the world.
+        /// </value>
         public Tile Above
         {
             get { return (0 < _posY) ? _world[_posX, _posY - 1] : null; }
         }
 
+        /// <summary>
+        /// Gets the tile below <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile below <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the bottom row of the world.
+        /// </value>
         public Tile Below
         {
             get { return ((_world.Height - 1) > _posY) ? _world[_posX, _posY + 1] : null; }
         }
 
+        /// <summary>
+        /// Gets the tile left of <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile left of <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the leftmost column of the world.
+        /// </value>
         public Tile Left
         {
             get { return (0 < _posX) ? _world[_posX - 1, _posY] : null; }
         }
 
+        /// <summary>
+        /// Gets the tile right of <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile right of <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the rightmost column of the world.
+        /// </value>
         public Tile Right
         {
             get { return ((_world.Width - 1) < _posX) ? _world[_posX + 1, _posY] : null; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Jantu.Tile"/> class.
+        /// </summary>
+        /// <param name='world'>
+        /// World to which the tile belongs.
+        /// </param>
+        /// <param name='x'>
+        /// X coordinate.
+        /// </param>
+        /// <param name='y'>
+        /// Y coordinate.
+        /// </param>
         public Tile(World world, int x, int y)
         {
             _world = world;
@@ -77,6 +154,16 @@ namespace Jantu
             _changed = true;
         }
 
+        /// <summary>
+        /// Finds a random empty neighbour tile.
+        /// </summary>
+        /// <returns>
+        /// A random neighbour tile that os not occupied by an entity.
+        /// <c>null</c> if no such tile is found.
+        /// </returns>
+        /// <param name='rand'>
+        /// Random number generator to be used.
+        /// </param>
         public Tile FindRandomEmptyNeighbour(Random rand)
         {
             List<Tile> freeTiles = new List<Tile>();
@@ -94,18 +181,42 @@ namespace Jantu
             return freeTiles[rand.Next(0, freeTiles.Count)];
         }
 
+        /// <summary>
+        /// Updates the tile and the entity on it, if any.
+        /// </summary>
+        /// <param name='dt'>
+        /// Seconds passed since the last call to this function.
+        /// </param>
+        /// <remarks>
+        /// This should be called once per frame.
+        /// </remarks>
         public void Update(double dt)
         {
             if (null != _entity)
                 _entity.Update(dt);
         }
 
+        /// <summary>
+        /// Draws the tile if it needs to be redrawn.
+        /// </summary>
+        /// <remarks>
+        /// The tile is only redrawn if either a new entity was assigned or
+        /// the <see cref="Jantu.Entity.NeedsRedraw"/> renturns <c>true</c> on
+        /// the entity on the tile. To force a redraw, use <see cref="Jantu.Tile.ForceDraw"/>.
+        /// </remarks>
         public void Draw()
         {
             if (_changed || (null != _entity && _entity.NeedsRedraw))
                 ForceDraw();
         }
 
+        /// <summary>
+        /// Forces a redraw of the tile.
+        /// </summary>
+        /// <remarks>
+        /// This forces the tile to redraw itself, regardless of whether this would
+        /// be neccessary. Usually <see cref="Jantu.Tile.Draw"/> is the better alternative.
+        /// </remarks>
         public void ForceDraw()
         {
             if (null != _entity)
