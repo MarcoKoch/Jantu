@@ -15,12 +15,12 @@ namespace Jantu
     class Species : ISerializable
     {
         string _name;
-        double _movingSpeed;
-        double _excrementRate;
-        double _foodRate;
-        double _mutationProbability;
-        int _maxHealth;
-        char _symbol;
+        double _movingSpeed         = 0.0;
+        double _excrementRate       = 0.1;
+        double _foodRate            = 0.1;
+        double _mutationProbability = 0.0;
+        int _maxHealth              = 100;
+        char _symbol                = '?';
         List<FoodKind> _food;
         List<Species> _preys;
         List<Species> _enemies;
