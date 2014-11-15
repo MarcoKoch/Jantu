@@ -10,8 +10,9 @@ namespace Jantu
 
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Cyan;
             Showbar menu = new Showbar();
-            Game game = new Game(Console.WindowWidth - menu.Width, Console.WindowHeight, 0, 0);
+            Game game = new Game(Console.WindowWidth - menu.Width, Console.WindowHeight, 0, 3);
             Stopwatch watch = new Stopwatch();
 
             watch.Start();
@@ -24,7 +25,7 @@ namespace Jantu
                 game.World.Draw();
 
                 if (1.0 / _fps * 0.001 > dt)
-                    Thread.Sleep((int)((long)(1.0 / _fps * 1000.0) - watch.ElapsedMilliseconds));
+                    Thread.Sleep(Math.Max(0,(int)((long)(1.0 / _fps * 1000.0) - watch.ElapsedMilliseconds)));
                 watch.Restart();
             }
         }
