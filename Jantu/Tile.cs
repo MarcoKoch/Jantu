@@ -48,7 +48,7 @@ namespace Jantu
         /// </summary>
         public int ConsoleY
         {
-            get { return _world.OriginY + _posX; }
+            get { return _world.OriginY + _posY; }
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Jantu
                 _entity.Draw();
             else
             {
-                Console.SetCursorPosition((int)_posX, (int)_posY);
+                Console.SetCursorPosition(ConsoleX, ConsoleY);
                 Console.Write(' ');
             }
 
