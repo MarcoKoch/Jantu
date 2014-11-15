@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cage.cs" />
+    <Compile Include="CageWallEntity.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="FoodEntity.cs" />
     <Compile Include="FoodKind.cs" />
