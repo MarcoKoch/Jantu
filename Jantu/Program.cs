@@ -10,15 +10,15 @@ namespace Jantu
 
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.BackgroundColor = ConsoleColor.White;
             Showbar menu = new Showbar();
             InfoBar menu2 = new InfoBar();
-            Game game = new Game(Console.WindowWidth - menu.Width,  0,1
-                );
+            Game game = new Game(Console.WindowWidth - menu.Width, Console.WindowHeight - menu2.Height, 0,menu2.Height);
             Stopwatch watch = new Stopwatch();
 
             watch.Start();
             menu.Draw();
+            menu2.Draw();
             while (true)
             {
                 double dt = 0.001 * watch.ElapsedMilliseconds;

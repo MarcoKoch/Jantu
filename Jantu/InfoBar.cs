@@ -27,8 +27,8 @@ namespace Jantu
         public InfoBar()
         {
 
-            _Width = 15;
-            _Height = 1;
+            _Width = Console.WindowWidth - 22;
+            _Height = 3;
             _PosY = 0;
             _PosX = 0;
             _Border = '│';
@@ -46,45 +46,52 @@ namespace Jantu
          public void Draw()
         {
 
-            Console.SetCursorPosition(0,0);
-            Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.SetCursorPosition(0,0);
+            Console.SetCursorPosition(_PosX,_PosY);
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Write(_Border3);
-            Console.BackgroundColor = ConsoleColor.DarkYellow;
+            for (uint i = 0; _Width  > i; i++)
+                Console.Write(_Border2);
+            Console.Write(_Border4);
 
 
 
+            Console.SetCursorPosition(_PosX, _Height-1);
+            for (uint i = 0; _Width > i; i++)
+                Console.Write(_Border2);
 
-           //if  (_PosX<=_Width && _Height==0)
-           //{ Console.Write(_Border2);
-           //Console.BackgroundColor = ConsoleColor.DarkYellow;
-           //             Console.Write(" ");
-           //}
+            Console.SetCursorPosition(_PosX,_Height-1);
+            Console.Write(_Border5);
+            for (uint i = 0; _Width > i; i++)
+                Console.Write(_Border2);
+            Console.Write(_Border6);
 
+            for (uint y = 0; _Height > y; y++)
+            {
+                Console.SetCursorPosition(_Width+1,1);
+                Console.Write(_Border);
 
-            //Console.SetCursorPosition(Console.WindowWidth - (int)_Width + 1, Console.WindowHeight / 2);
-            //for (uint i = 0; _Width - 2 > i; i++)
-            //    Console.Write(_Border2);
-
-            //Console.SetCursorPosition(Console.WindowWidth - (int)_Width, Console.WindowHeight - 1);
-            //Console.Write(_Border5);
-            //for (uint i = 0; _Width - 2 > i; i++)
-            //    Console.Write(_Border2);
-            //Console.Write(_Border6);
-
-            //for (uint y = 1; Console.WindowHeight - 1 > y; y++)
-            //{
-            //    Console.SetCursorPosition(Console.WindowWidth - (int)_Width, (int)y);
-            //    Console.Write(_Border);
-
-            //    Console.SetCursorPosition(Console.WindowWidth - 1, (int)y);
-            //    Console.Write(_Border);
-            //}
-          
-
+                Console.SetCursorPosition(0 , 1);
+                Console.Write(_Border);
             }
+
+            
+                
+                    Console.SetCursorPosition(1,1);
+                    for (int x = 1; x < _Width+1; x++)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.Write(" ");
+                    }
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+
         }
-    }
+            }
+              }
+    
+
+
+    
+
 
 
 
