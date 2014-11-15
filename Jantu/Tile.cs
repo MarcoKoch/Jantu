@@ -17,6 +17,7 @@ namespace Jantu
         int _posY;
         Entity _entity;
         World _world;
+        Cage _cage;
         bool _changed;
 
         /// <summary>
@@ -91,6 +92,15 @@ namespace Jantu
                     value.OnTileChanged(this);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the cage to which the tile belongs.
+        /// </summary>
+        public Cage Cage
+        {
+            get { return _cage; }
+            set { _cage = value; }
         }
 
         /// <summary>
