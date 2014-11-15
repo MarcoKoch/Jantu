@@ -11,7 +11,9 @@ namespace Jantu
         static void Main(string[] args)
         {
             Showbar menu = new Showbar();
-            Game game = new Game(Console.WindowWidth - menu.Width, Console.WindowHeight, 0, 0);
+            InfoBar menu2 = new InfoBar();
+            Game game = new Game(Console.WindowWidth - menu.Width,  0,1
+                );
             Stopwatch watch = new Stopwatch();
 
             watch.Start();
