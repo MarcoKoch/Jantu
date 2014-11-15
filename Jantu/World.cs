@@ -7,6 +7,8 @@ namespace Jantu
     /// </summary>
     class World
     {
+        int _originX;
+        int _originY;
         int _width;
         int _height;
         Tile[][] _tiles;
@@ -14,9 +16,6 @@ namespace Jantu
         /// <summary>
         /// Gets the width of the world.
         /// </summary>
-        /// <value>
-        /// The width.
-        /// </value>
         public int Width
         {
             get { return _width; }
@@ -25,12 +24,19 @@ namespace Jantu
         /// <summary>
         /// Gets the height of the world.
         /// </summary>
-        /// <value>
-        /// The height.
-        /// </value>
         public int Height
         {
             get { return _height; }
+        }
+
+        public int OriginX
+        {
+            get { return _originX; }
+        }
+
+        public int OriginY
+        {
+            get { return _originY; }
         }
 
         /// <summary>
@@ -68,11 +74,17 @@ namespace Jantu
         /// <exception cref='ArgumentOutOfRangeException'>
         /// If the size of the world would be negative or zero.
         /// </exception>
-        public World(int width, int height)
+        public World(int width, int height, int originX, int originY)
         {
             if (0 >= width || 0 >= height)
                 throw new ArgumentOutOfRangeException("World dimensions");
 
+            if (0 > originX || (Console.WindowWidth - 1) < originX ||
+                0 > originY || (Console.WindowHeight - 1) < originY)
+                throw new ArgumentOutOfRangeException("World origin location");
+
+            _originX = originX;
+            _originY = originY;
             _width = width;
             _height = height;
             _tiles = new Tile[width][];

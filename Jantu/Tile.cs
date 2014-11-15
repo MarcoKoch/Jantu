@@ -22,9 +22,6 @@ namespace Jantu
         /// <summary>
         /// Gets the x coordinate of the tile.
         /// </summary>
-        /// <value>
-        /// The x coordinate.
-        /// </value>
         public int X
         {
             get { return _posX; }
@@ -33,20 +30,30 @@ namespace Jantu
         /// <summary>
         /// Gets the y coordinate of the tile.
         /// </summary>
-        /// <value>
-        /// The y coordinate.
-        /// </value>
         public int Y
         {
             get { return _posY; }
         }
 
         /// <summary>
+        /// Gets the x coordinate of the tile in the console.
+        /// </summary>
+        public int ConsoleX
+        {
+            get { return _world.OriginX + _posX; }
+        }
+
+        /// <summary>
+        /// Gets the y coordinate of the tile in the console.
+        /// </summary>
+        public int ConsoleY
+        {
+            get { return _world.OriginY + _posX; }
+        }
+
+        /// <summary>
         /// Gets the world of which the tile is part.
         /// </summary>
-        /// <value>
-        /// The world of which the tile is part.
-        /// </value>
         public World World
         {
             get { return _world; }

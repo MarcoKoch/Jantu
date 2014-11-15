@@ -24,10 +24,10 @@
             set { _cash = value; }
         }
 
-        public Game(int worldWidth, int worldHeight)
+        public Game(int worldWidth, int worldHeight, int worldOriginX, int worldOriginY)
         {
             _data = new DataManager();
-            _world = new World(worldWidth, worldHeight);
+            _world = new World(worldWidth, worldHeight, worldOriginX, worldOriginY);
             _cash = _startCash;
         }
     }
