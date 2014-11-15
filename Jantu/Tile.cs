@@ -226,8 +226,12 @@ namespace Jantu
         /// </remarks>
         public void ForceDraw()
         {
+            Console.BackgroundColor = _world.BackgroundColor;
+
             if (null != _entity)
+            {
                 _entity.Draw();
+            }
             else
             {
                 Console.SetCursorPosition(ConsoleX, ConsoleY);

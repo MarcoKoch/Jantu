@@ -12,6 +12,8 @@ namespace Jantu
         int _width;
         int _height;
         Tile[,] _tiles;
+        ConsoleColor _bgColor = ConsoleColor.Black;
+        bool _changed = false;
 
         /// <summary>
         /// Gets the width of the world.
@@ -43,6 +45,16 @@ namespace Jantu
         public int OriginY
         {
             get { return _originY; }
+        }
+
+        public ConsoleColor BackgroundColor
+        {
+            get { return _bgColor; }
+            set
+            {
+                _bgColor = value;
+                _changed = true;
+            }
         }
 
         /// <summary>
@@ -120,8 +132,23 @@ namespace Jantu
         /// </summary>
         public void Draw()
         {
+            if (_changed)
+                ForceDraw();
+            else
+            {
+                foreach (var tile in _tiles)
+                    tile.Draw();
+
+                _changed = false;
+            }
+        }
+
+        public void ForceDraw()
+        {
             foreach (var tile in _tiles)
-                tile.Draw();
+                tile.ForceDraw();
+
+            _changed = false;
         }
     }
 }
