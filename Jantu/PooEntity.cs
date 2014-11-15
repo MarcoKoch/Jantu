@@ -14,7 +14,7 @@ namespace Jantu
         /// </summary>
         public override void Draw()
         {
-            Console.SetCursorPosition((int)Tile.X, (int)Tile.Y);
+            Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
             Console.Write(_drawChar);
         }
     }
