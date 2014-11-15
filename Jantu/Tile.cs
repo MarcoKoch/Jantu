@@ -93,6 +93,12 @@ namespace Jantu
             }
         }
 
+
+        public Tile Stay
+        {
+            get { return _world[_posX, _posY]; }
+        }
+
         /// <summary>
         /// Gets the tile above <c>this</c>.
         /// </summary>
@@ -103,6 +109,55 @@ namespace Jantu
         public Tile Above
         {
             get { return (0 < _posY) ? _world[_posX, _posY - 1] : null; }
+        }
+
+        /// <summary>
+        /// Gets the tile aboveleft <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile aboveleft <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the top row of the world.
+        /// </value>
+        public Tile AboveLeft
+        {
+            get { return (0 < _posY) && (0 < _posX) ? _world[_posX - 1, _posY - 1] : null; }
+        }
+
+        /// <summary>
+        /// Gets the tile aboveright <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile aboveright <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the top row of the world.
+        /// </value>
+        public Tile AboveRight
+        {
+            get { return (0 < _posY) && ((_world.Width - 1) < _posX) ? _world[_posX + 1, _posY - 1] : null; }
+        }
+
+
+        /// <summary>
+        /// Gets the tile belowleft <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile belowleft <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the top row of the world.
+        /// </value>
+        public Tile BelowLeft
+        {
+            get { return (0 < _posX) && ((_world.Height - 1) > _posY) ? _world[_posX - 1, _posY + 1] : null; }
+        }
+
+        /// <summary>
+        /// Gets the tile belowright <c>this</c>.
+        /// </summary>
+        /// <value>
+        /// The tile belowright <c>this</c>, if any. <c>null</c> if <c>this</c>
+        /// is in the top row of the world.
+        /// </value>
+        public Tile BelowRight
+        {
+            get { return ((_world.Height - 1) > _posY) && ((_world.Width - 1) < _posX) ? _world[_posX + 1, _posY + 1] : null; }
         }
 
         /// <summary>

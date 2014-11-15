@@ -15,6 +15,21 @@ namespace Jantu
             Game game = new Game(Console.WindowWidth - menu.Width, Console.WindowHeight, 0, 0);
             Stopwatch watch = new Stopwatch();
 
+            Species cowSpecies = new Species("Cow");
+            game.Data.Species.Add(cowSpecies);
+            cowSpecies.Symbol = 'K';
+
+            Species chickenSpecies = new Species("Chicken");
+            game.Data.Species.Add(chickenSpecies);
+            chickenSpecies.Symbol = 'C';
+
+            AnimalEntity cow1 = new AnimalEntity(cowSpecies);
+            AnimalEntity chicken1 = new AnimalEntity(chickenSpecies);
+            World w = game.World;
+            w[4, 7].Entity = cow1;
+            w[8, 12].Entity = chicken1;
+
+
             watch.Start();
             menu.Draw();
             while (true)
