@@ -10,6 +10,7 @@ namespace Jantu
 
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Cyan;
             Showbar menu = new Showbar();
             InfoBar menu2 = new InfoBar();
             Game game = new Game(Console.WindowWidth - menu.Width,  0,1
@@ -26,7 +27,7 @@ namespace Jantu
                 game.World.Draw();
 
                 if (1.0 / _fps * 0.001 > dt)
-                    Thread.Sleep((int)((long)(1.0 / _fps * 1000.0) - watch.ElapsedMilliseconds));
+                    Thread.Sleep(Math.Max(0,(int)((long)(1.0 / _fps * 1000.0) - watch.ElapsedMilliseconds)));
                 watch.Restart();
             }
         }

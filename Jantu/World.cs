@@ -11,7 +11,7 @@ namespace Jantu
         int _originY;
         int _width;
         int _height;
-        Tile[][] _tiles;
+        Tile[,] _tiles;
 
         /// <summary>
         /// Gets the width of the world.
@@ -29,11 +29,17 @@ namespace Jantu
             get { return _height; }
         }
 
+        /// <summary>
+        /// Gets the x coordinate of the origin of the world in the console.
+        /// </summary>
         public int OriginX
         {
             get { return _originX; }
         }
 
+        /// <summary>
+        /// Gets the y coordinate of the origin of the world in the console.
+        /// </summary>
         public int OriginY
         {
             get { return _originY; }
@@ -58,7 +64,7 @@ namespace Jantu
             {
                 if (0 > x || _width <= x || 0 > y || _height <= y)
                     throw new ArgumentOutOfRangeException("Tile coordinates");
-                return _tiles[x][y];
+                return _tiles[x,y];
             }
         }
 
@@ -87,14 +93,11 @@ namespace Jantu
             _originY = originY;
             _width = width;
             _height = height;
-            _tiles = new Tile[width][];
+            _tiles = new Tile[width,height];
 
             for (int x = 0; width > x; ++x)
-            {
-                _tiles[x] = new Tile[height];
                 for (int y = 0; height > y; ++y)
-                    _tiles[x][y] = new Tile(this, x, y);
-            }
+                    _tiles[x, y] = new Tile(this, x, y);
         }
 
         /// <summary>
@@ -108,9 +111,8 @@ namespace Jantu
         /// </remarks>
         public void Update(double dt)
         {
-            foreach (Tile[] row in _tiles)
-                foreach (Tile tile in row)
-                    tile.Update(dt);
+            foreach (var tile in _tiles)
+                tile.Update(dt);
         }
 
         /// <summary>
@@ -118,9 +120,8 @@ namespace Jantu
         /// </summary>
         public void Draw()
         {
-            foreach (Tile[] row in _tiles)
-                foreach (Tile tile in row)
-                    tile.Draw();
+            foreach (var tile in _tiles)
+                tile.Draw();
         }
     }
 }
