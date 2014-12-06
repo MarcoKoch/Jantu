@@ -37,7 +37,15 @@ namespace Jantu
         private CageType _type;
         private Balancing _balance;
         private List<Tile> _tiles;
-        private bool _ispreview;
+        private bool Preview;
+        public List<CageWallEntity> Walls
+        {
+            get
+            {
+                return _walls;
+            }
+        }
+
         private Game _game;
 
         List<PooEntity> _pooList = new List<PooEntity>();
@@ -49,7 +57,7 @@ namespace Jantu
         {
             List<Vector2> wallpositions = Type.WallPosition;
             _type = type;
-            _ispreview = preview;
+            Preview = preview;
             _game = game;
             _balance = balance;
             World world = game.World;
