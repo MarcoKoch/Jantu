@@ -12,16 +12,16 @@ namespace Jantu
         public int SpeciesCount;
 
         List<AnimalEntity> AnimalList = new List<AnimalEntity>();
-        List<string> SpeciesList = new List<string>();
+        List<Species> SpeciesList = new List<Species>();
 
-        private void addanimal(AnimalEntity animal)
+        private void addAnimal(AnimalEntity animal)
         {
             AnimalList.Add(animal);
             for(int i = 0; i <= SpeciesList.Count; i++)
             {
-               string AnimalX = SpeciesList[i];
+               Species AnimalX = SpeciesList[i];
 
-               if (AnimalX.Equals(animal.Species + ""))
+               if (AnimalX == animal.Species)
                {
                    continue;
                }
@@ -32,9 +32,9 @@ namespace Jantu
             }
         }
 
-        private void removeanimal(AnimalEntity animal)
+        private void removeAnimal(AnimalEntity animal)
         {
-            string AnimalX = (animal.Species + "");
+            Species AnimalX = animal.Species;
             for(int i = 0; i <= AnimalList.Count; i++)
             {
                 if (animal == AnimalList[i])
@@ -45,7 +45,7 @@ namespace Jantu
             
             for (i = 0; i <= AnimalList.Count; i++)
             {
-                if (AnimalX.Equals(AnimalList[i].Species + ""))
+                if (AnimalX == SpeciesList[i])
                 {
                     continue;
                 }
@@ -65,11 +65,11 @@ namespace Jantu
             int attract;
             for (int i = 0; i <= SpeciesList.Count; i++)
             {
-                string AnimalX = SpeciesList[i];
+                Species AnimalX = SpeciesList[i];
                 SpeciesManager Manager = new SpeciesManager();
-                Species P = Manager.GetByName(AnimalX);
-                attract = P.Attractivity();
+                attract = AnimalX.Attractivity;
             }
+            
             Attractivity = amax - k * (amax / (k + (PooCount * ppoo) + attract));
         }
    }
