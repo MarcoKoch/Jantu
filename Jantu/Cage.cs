@@ -41,10 +41,10 @@ namespace Jantu
                 if (animal == AnimalList[i])
                 {
                     AnimalList.RemoveAt(i);
-                    continue;
+                    break; 
                 }
-            
-            for (i = 0; i <= AnimalList.Count; i++)
+            }  
+            for (int i = 0; i <= AnimalList.Count; i++)
             {
                 if (AnimalX == SpeciesList[i])
                 {
@@ -53,8 +53,8 @@ namespace Jantu
                 else if (i == AnimalList.Count)
                 {
                     SpeciesList.Remove(AnimalX);
+                    break;
                 }
-            }
            }
         }
         public void AddPoo(PooEntity poo)
