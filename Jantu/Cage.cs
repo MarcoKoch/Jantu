@@ -11,6 +11,7 @@ namespace Jantu
         public int PooCount;
         public int SpeciesCount;
 
+        List<PooEntity> PooList = new List<PooEntity>();
         List<AnimalEntity> AnimalList = new List<AnimalEntity>();
         List<Species> SpeciesList = new List<Species>();
 
@@ -56,10 +57,23 @@ namespace Jantu
             }
            }
         }
-        public void AddPoo()
+        public void AddPoo(PooEntity poo)
         {
             PooCount++;
+            PooList.Add(poo);
         }
+
+        public void Clean ()
+        {
+            for (int i = 0; i < PooList.Count; i++)
+            {
+                PooEntity poo = PooList[i];
+                poo.Tile.Entity = null;
+            }
+
+            PooList.Clear();
+        }
+        
         public void CalculateAttractivity(int amax, int ppoo, int k)
         {
             int attract;
