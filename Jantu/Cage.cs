@@ -13,14 +13,14 @@ namespace Jantu
             {
                 int attract;
 
-                for (int i = 0; i <= SpeciesList.Count; i++)
+                for (int i = 0; i <= _speciesList.Count; i++)
                 {
-                    Species AnimalX = SpeciesList[i];
+                    Species animalX = _speciesList[i];
                     SpeciesManager Manager = new SpeciesManager();
-                    attract = AnimalX.Attractivity;
+                    attract = animalX.Attractivity;
                 }
 
-                return Type.MaxAttractivity - Balance.AttractivityScale * (Type.MaxAttractivity / (Balance.AttractivityScale + (PooCount * Balance.PooAttractivityPenalty) + attract));
+                return _type.MaxAttractivity - _balance.AttractivityScale * (_type.MaxAttractivity / (_balance.AttractivityScale + (PooCount * _balance.PooAttractivityPenalty) + attract));
             }
         }
 
@@ -28,57 +28,81 @@ namespace Jantu
         {
             get
             {
-                return Attractivity / Type.MaxAttractivity * Type.SurroundingTiles.Count;
+                return Attractivity / _type.MaxAttractivity * _type.SurroundingTiles.Count;
 
             }
         }
         public int PooCount;
         public int SpeciesCount;
-        private CageType Type;
-        private Balancing Balance;
+        private CageType _type;
+        private Balancing _balance;
+        private List<Tile> _tiles;
+        private bool _ispreview;
+        private Game _game;
 
-        List<PooEntity> PooList = new List<PooEntity>();
-        List<AnimalEntity> AnimalList = new List<AnimalEntity>();
-        List<Species> SpeciesList = new List<Species>();
+        List<PooEntity> _pooList = new List<PooEntity>();
+        List<AnimalEntity> _animalList = new List<AnimalEntity>();
+        List<Species> _speciesList = new List<Species>();
+        List<CageWallEntity> _walls = new List<CageWallEntity>();
+
+        private Cage(CageType type, Vector2 pos, Game game, Balancing balance, bool preview)
+        {
+            List<Vector2> wallpositions = Type.WallPosition;
+            _type = type;
+            _ispreview = preview;
+            _game = game;
+            _balance = balance;
+            World world = game.World;
+
+            for (int i = 0; i < wallpositions.Count; i++)
+            {
+                CageWallEntity wall = new CageWallEntity(this);
+                Vector2 wallpos = pos + wallpositions[i];
+                Tile tile = world[wallpos];
+                tile.Entity = wall;
+                _walls.Add(wall);
+            }
+        }
 
         private void addAnimal(AnimalEntity animal)
         {
-            AnimalList.Add(animal);
-            for(int i = 0; i <= SpeciesList.Count; i++)
-            {
-               Species AnimalX = SpeciesList[i];
+            _animalList.Add(animal);
 
-               if (AnimalX == animal.Species)
+            for(int i = 0; i <= _speciesList.Count; i++)
+            {
+               Species animalX = _speciesList[i];
+
+               if (animalX == animal.Species)
                {
                    continue;
                }
-               else if (i == SpeciesList.Count)
+               else if (i == _speciesList.Count)
                {
-                   SpeciesList.Add(AnimalX);
+                   _speciesList.Add(animalX);
                }
             }
         }
 
         private void removeAnimal(AnimalEntity animal)
         {
-            Species AnimalX = animal.Species;
-            for(int i = 0; i <= AnimalList.Count; i++)
+            Species animalX = animal.Species;
+            for(int i = 0; i <= _animalList.Count; i++)
             {
-                if (animal == AnimalList[i])
+                if (animal == _animalList[i])
                 {
-                    AnimalList.RemoveAt(i);
+                    _animalList.RemoveAt(i);
                     break; 
                 }
             }  
-            for (int i = 0; i <= AnimalList.Count; i++)
+            for (int i = 0; i <= _animalList.Count; i++)
             {
-                if (AnimalX == SpeciesList[i])
+                if (animalX == _speciesList[i])
                 {
                     continue;
                 }
-                else if (i == AnimalList.Count)
+                else if (i == _animalList.Count)
                 {
-                    SpeciesList.Remove(AnimalX);
+                    _speciesList.Remove(animalX);
                     break;
                 }
            }
@@ -86,18 +110,18 @@ namespace Jantu
         public void AddPoo(PooEntity poo)
         {
             PooCount++;
-            PooList.Add(poo);
+            _pooList.Add(poo);
         }
 
         public void Clean ()
         {
-            for (int i = 0; i < PooList.Count; i++)
+            for (int i = 0; i < _pooList.Count; i++)
             {
-                PooEntity poo = PooList[i];
+                PooEntity poo = _pooList[i];
                 poo.Tile.Entity = null;
             }
 
-            PooList.Clear();
+            _pooList.Clear();
         }
    }
 }
