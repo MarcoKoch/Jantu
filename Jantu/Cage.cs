@@ -24,6 +24,14 @@ namespace Jantu
             }
         }
 
+        public int NumPeeps
+        {
+            get
+            {
+                return Attractivity / Type.MaxAttractivity * Type.SurroundingTiles.Count;
+
+            }
+        }
         public int PooCount;
         public int SpeciesCount;
         private CageType Type;
