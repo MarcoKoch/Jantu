@@ -7,9 +7,27 @@ namespace Jantu
 {
     public class Cage
     {
-        public int Attractivity;
+        public int Attractivity
+        {
+            get
+            {
+                int attract;
+
+                for (int i = 0; i <= SpeciesList.Count; i++)
+                {
+                    Species AnimalX = SpeciesList[i];
+                    SpeciesManager Manager = new SpeciesManager();
+                    attract = AnimalX.Attractivity;
+                }
+
+                return Type.MaxAttractivity - Balance.AttractivityScale * (Type.MaxAttractivity / (Balance.AttractivityScale + (PooCount * Balance.PooAttractivityPenalty) + attract));
+            }
+        }
+
         public int PooCount;
         public int SpeciesCount;
+        private CageType Type;
+        private Balancing Balance;
 
         List<PooEntity> PooList = new List<PooEntity>();
         List<AnimalEntity> AnimalList = new List<AnimalEntity>();
@@ -72,19 +90,6 @@ namespace Jantu
             }
 
             PooList.Clear();
-        }
-        
-        public void CalculateAttractivity(int amax, int ppoo, int k)
-        {
-            int attract;
-            for (int i = 0; i <= SpeciesList.Count; i++)
-            {
-                Species AnimalX = SpeciesList[i];
-                SpeciesManager Manager = new SpeciesManager();
-                attract = AnimalX.Attractivity;
-            }
-            
-            Attractivity = amax - k * (amax / (k + (PooCount * ppoo) + attract));
         }
    }
 }
