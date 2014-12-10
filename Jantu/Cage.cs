@@ -33,10 +33,9 @@ namespace Jantu
             }
         }
         public int PooCount;
-        public int SpeciesCount;
+        public int SpeciesCount = 0;
         private CageType _type;
         private Balancing _balance;
-        private List<Tile> _tiles;
         private bool Preview;
         public List<CageWallEntity> Walls
         {
