@@ -36,8 +36,9 @@ namespace Jantu
         public int SpeciesCount;
         private CageType _type;
         private Balancing _balance;
-        private List<Tile> _tiles;
         private bool Preview;
+        private List<Tile> _SurroundingTiles;
+        private List<Tile> _EnclosedTiles;
         public List<CageWallEntity> Walls
         {
             get
