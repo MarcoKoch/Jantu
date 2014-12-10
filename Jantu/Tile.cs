@@ -250,5 +250,9 @@ namespace Jantu
 
             _changed = false;
         }
+        public void AddPooToCage()
+        {
+            Cage.AddPoo();
+        }
     }
 }
