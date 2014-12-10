@@ -40,7 +40,7 @@ namespace Jantu
         {
 
             Console.SetCursorPosition(Console.WindowWidth - (int)_Width, 0);
-            Console.BackgroundColor = ConsoleColor.DarkCyan;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Write(_Border3);
             for (uint i = 0; _Width - 2 > i; i++)
                 Console.Write(_Border2);
@@ -69,7 +69,7 @@ namespace Jantu
                 for (int m = 1; m <= Console.WindowHeight / 2 - 1; m++)
                 {
                     Console.SetCursorPosition(Console.WindowWidth - (int)_Width + 1 + l, (int)m);
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    Console.BackgroundColor = ConsoleColor.Gray;
                     Console.Write(" ");
 
 
@@ -78,7 +78,7 @@ namespace Jantu
                 for (int m = Console.WindowHeight / 2 + 1; m < Console.WindowHeight - 1; m++)
                 {
                     Console.SetCursorPosition(Console.WindowWidth - (int)_Width + 1 + l, (int)m);
-                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.BackgroundColor = ConsoleColor.Gray;
                     Console.Write(" ");
 
 
