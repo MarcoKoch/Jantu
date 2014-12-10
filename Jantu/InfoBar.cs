@@ -19,16 +19,18 @@ namespace Jantu
         private char _Border4;
         private char _Border5;
         private char _Border6;
+        private Game _game;
+       
        
       
         public int Width { get { return _Width; }}
         public int Height { get { return _Height; } }
 
-        public InfoBar()
+        public InfoBar(Game game, int width, int height)
         {
 
-            _Width = Console.WindowWidth - 22;
-            _Height = 3;
+            _Width = width;
+            _Height = height;
             _PosY = 0;
             _PosX = 0;
             _Border = '│';
@@ -37,6 +39,7 @@ namespace Jantu
             _Border4 = '┐';
             _Border5 = '└';
             _Border6 = '┘';
+            _game = game;
            
 
         }
@@ -59,10 +62,10 @@ namespace Jantu
             for (uint i = 0; _Width > i; i++)
                 Console.Write(_Border2);
 
-            Console.SetCursorPosition(_PosX,_Height-1);
+         Console.SetCursorPosition(_PosX,_Height-1);
             Console.Write(_Border5);
-            for (uint i = 0; _Width > i; i++)
-                Console.Write(_Border2);
+           for (uint i = 0; _Width > i; i++)
+               Console.Write(_Border2);
             Console.Write(_Border6);
 
             for (uint y = 0; _Height > y; y++)
@@ -83,6 +86,39 @@ namespace Jantu
                         Console.Write(" ");
                     }
                     Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+
+                    
+                    Console.SetCursorPosition(44,1);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.Gray;             
+                    Console.Write("Cash:"+_game.Cash);
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                   
+             
+                    Console.SetCursorPosition(33, 1);
+                   Console.ForegroundColor = ConsoleColor.Black;
+                  Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.Write("Day:" + _game.Day);
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+             Console.SetCursorPosition(17, 1);
+            Console.ForegroundColor = ConsoleColor.Black;
+              Console.BackgroundColor = ConsoleColor.Gray;
+              Console.Write("Visitors:" + _game.Visitors);
+             Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+             Console.SetCursorPosition(2, 1);
+              Console.ForegroundColor = ConsoleColor.Black;
+               Console.BackgroundColor = ConsoleColor.Gray;
+              Console.Write("Animals:" + _game.Animals);
+             Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+
+            
+       
+             
+
 
         }
             }
