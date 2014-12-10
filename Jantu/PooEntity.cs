@@ -7,7 +7,7 @@ namespace Jantu
     /// </summary>
     class PooEntity : Entity
     {
-        const char _drawChar = '~';
+        const char _drawChar = '♨';
 
         /// <summary>
         /// Draws the entity.
