@@ -83,13 +83,21 @@ namespace Jantu
             for (int x = 0; layoutWidth > x; ++x)
                 verticalInCage[x] = false;
 
+            // Read all lines of the layout
             string[] lines = new string[layoutHeight];
             for (int y = 0; layoutHeight > y; ++y)
+            {
                 lines[y] = stream.ReadLine();
 
+                if (lines[y].Length > layoutWidth)
+                    throw new ParseError(y, "Line too long");
+            }
+
+            // Go through them line after line
             for (int y = 0; layoutHeight > y; ++y)
             {
-                for (int x = 0; layoutWidth > x; ++x)
+                // ... and character after character
+                for (int x = 0; Math.Min(lines[y].Length, layoutWidth) > x; ++x)
                 {
                     switch (lines[y][x])
                     {
@@ -101,14 +109,14 @@ namespace Jantu
                         case '#':
                             _wallPositions.Add(new Vector2(x, y));
 
-                            if (horizontalInCage && (((layoutWidth - 1) == x) || '#' == lines[y][x + 1]))
+                            if (horizontalInCage && (((lines[y].Length - 1) == x) || (x < lines[y].Length && '#' == lines[y][x + 1])))
                                 _surroundingTilesPositions.Add(new Vector2(x + 1, y));
-                            else if (!horizontalInCage && (0 == x || '#' == lines[y][x-1]))
+                            else if (!horizontalInCage && (0 == x || (x < lines[y].Length && '#' == lines[y][x-1])))
                                 _surroundingTilesPositions.Add(new Vector2(x - 1, y));
 
-                            if (verticalInCage[x] && ((layoutHeight - 1) == x || '#' == lines[y+1][x]))
+                            if (verticalInCage[x] && ((layoutHeight - 1) == y || (x < lines[y+1].Length && '#' == lines[y+1][x])))
                                 _surroundingTilesPositions.Add(new Vector2(x, y+1));
-                            else if (!verticalInCage[x] && (0 == x || '#' == lines[y-1][x]))
+                            else if (!verticalInCage[x] && (0 == y || (x < lines[y-1].Length && '#' == lines[y-1][x])))
                                 _surroundingTilesPositions.Add(new Vector2(x, y-1));
 
                             break;
@@ -117,6 +125,9 @@ namespace Jantu
                             throw new ParseError(y, "Unexpected character '" + lines[y][x] + "'");
                     }
                 }
+
+                if (horizontalInCage)
+                    throw new ParseError(y, "Missing closing cage wall");
             }
         }
     }

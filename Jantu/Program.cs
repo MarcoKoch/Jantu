@@ -15,6 +15,12 @@ namespace Jantu
             Game game = new Game(Console.WindowWidth - menu.Width, Console.WindowHeight, 0, 0);
             Stopwatch watch = new Stopwatch();
 
+            // Test code
+            var balance = new Balancing();
+            var cageType = CageType.ReadFromFile("../../../data/cages/cross.cage");
+            var cage = new Cage(cageType, new Vector2(1,1), game, balance, false);
+            // End of test code
+
             watch.Start();
             menu.Draw();
             while (true)
