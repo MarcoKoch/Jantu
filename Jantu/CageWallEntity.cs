@@ -8,6 +8,16 @@ namespace Jantu
     class CageWallEntity : Entity
     {
         const char _drawChar = '#';
+        Cage _cage;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="cage">Cage to which the wall belongs</param>
+        public CageWallEntity(Cage cage)
+        {
+            _cage = cage;
+        }
 
         public override void Draw()
         {

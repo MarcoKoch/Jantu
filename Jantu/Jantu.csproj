@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Balancing.cs" />
     <Compile Include="Cage.cs" />
+    <Compile Include="CageType.cs" />
     <Compile Include="CageWallEntity.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="FoodEntity.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Species.cs" />
     <Compile Include="SpeciesManager.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="Vector2.cs" />
     <Compile Include="World.cs" />
     <Compile Include="FoodKindManager.cs" />
     <Compile Include="DataManager.cs" />

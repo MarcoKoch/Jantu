@@ -20,6 +20,7 @@ namespace Jantu
         double _foodRate            = 0.1;
         double _mutationProbability = 0.0;
         int _maxHealth              = 100;
+        int _attractivity           = 100;
         char _symbol                = '?';
         List<FoodKind> _food;
         List<Species> _preys;
@@ -95,6 +96,14 @@ namespace Jantu
         {
             get { return _symbol; }
             set { _symbol = value; }
+        }
+
+        /// <summary>
+        /// Gets the attractivity of animals of this species.
+        /// </summary>
+        public int Attractivity
+        {
+            get { return _attractivity; }
         }
 
         /// <summary>

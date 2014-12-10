@@ -141,7 +141,7 @@ namespace Jantu
             Tile pooTile = Tile.FindRandomEmptyNeighbour(rand);
             if (null != pooTile)
             {
-                pooTile.AddPooToCage();
+                //pooTile.AddPooToCage();
                 return new PooEntity();
             }
 

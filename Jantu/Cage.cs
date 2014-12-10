@@ -5,19 +5,19 @@ using System.Text;
 
 namespace Jantu
 {
-    public class Cage
+    class Cage
     {
         public int Attractivity
         {
             get
             {
-                int attract;
+                int attract = 0;
 
                 for (int i = 0; i <= _speciesList.Count; i++)
                 {
                     Species animalX = _speciesList[i];
                     SpeciesManager Manager = new SpeciesManager();
-                    attract = animalX.Attractivity;
+                    attract += animalX.Attractivity;
                 }
 
                 return _type.MaxAttractivity - _balance.AttractivityScale * (_type.MaxAttractivity / (_balance.AttractivityScale + (PooCount * _balance.PooAttractivityPenalty) + attract));
@@ -28,7 +28,7 @@ namespace Jantu
         {
             get
             {
-                return Attractivity / _type.MaxAttractivity * _type.SurroundingTiles.Count;
+                return Attractivity / _type.MaxAttractivity * _type.SurroundingTilesPositions.Count;
 
             }
         }
@@ -53,9 +53,9 @@ namespace Jantu
         List<Species> _speciesList = new List<Species>();
         List<CageWallEntity> _walls = new List<CageWallEntity>();
 
-        private Cage(CageType type, Vector2 pos, Game game, Balancing balance, bool preview)
+        public Cage(CageType type, Vector2 pos, Game game, Balancing balance, bool preview)
         {
-            List<Vector2> wallpositions = Type.WallPosition;
+            List<Vector2> wallpositions = type.WallPositions;
             _type = type;
             Preview = preview;
             _game = game;
@@ -72,7 +72,7 @@ namespace Jantu
             }
         }
 
-        private void addAnimal(AnimalEntity animal)
+        public void addAnimal(AnimalEntity animal)
         {
             _animalList.Add(animal);
 
@@ -91,7 +91,7 @@ namespace Jantu
             }
         }
 
-        private void removeAnimal(AnimalEntity animal)
+        public void removeAnimal(AnimalEntity animal)
         {
             Species animalX = animal.Species;
             for(int i = 0; i <= _animalList.Count; i++)

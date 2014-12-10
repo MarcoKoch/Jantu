@@ -81,6 +81,19 @@ namespace Jantu
         }
 
         /// <summary>
+        /// Gets the tile at the specified location.
+        /// </summary>
+        /// <param name="pos">Location of the tile relative to the root of the world (top left)</param>
+        /// <exception cref='ArgumentOutOfRangeException'>
+        /// Is thrown if the specified coordinates would lie outside the bounds
+        /// of the world.
+        /// </exception>
+        public Tile this[Vector2 pos]
+        {
+            get { return this[pos.X, pos.Y]; }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Jantu.World"/> class.
         /// </summary>
         /// <param name='width'>
