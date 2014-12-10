@@ -37,11 +37,11 @@ namespace Jantu
         private CageType _type;
         private Balancing _balance;
         private bool Preview;
-        private List<Tile> _SurroundingTiles;
-        private List<Vector2> _SurroundingVectors;
-        private List<Tile> _EnclosedTiles;
-        private List<Vector2> _EnclosedVectors;
-        private World world;
+        private List<Tile> _surroundingTiles = new List<Tile>();
+        private List<Tile> _enclosedTiles = new List<Tile>();
+        private World _world;
+        private Game _game;
+
         public List<CageWallEntity> Walls
         {
             get
@@ -50,7 +50,15 @@ namespace Jantu
             }
         }
 
-        private Game _game;
+        public List<Tile> EnclosedTiles
+        {
+            get { return _enclosedTiles; }
+        }
+
+        public List<Tile> SurroundingTiles
+        {
+            get { return _surroundingTiles; }
+        }
 
         List<PooEntity> _pooList = new List<PooEntity>();
         List<AnimalEntity> _animalList = new List<AnimalEntity>();
@@ -64,16 +72,19 @@ namespace Jantu
             Preview = preview;
             _game = game;
             _balance = balance;
-            world = game.World;
+            _world = game.World;
 
             for (int i = 0; i < wallpositions.Count; i++)
             {
                 CageWallEntity wall = new CageWallEntity(this);
                 Vector2 wallpos = pos + wallpositions[i];
-                Tile tile = world[wallpos];
+                Tile tile = _world[wallpos];
                 tile.Entity = wall;
                 _walls.Add(wall);
             }
+
+            RecomputeEnclosedTiles(pos);
+            RecomputeSurroundingTiles(pos);
         }
 
         public void addAnimal(AnimalEntity animal)
@@ -136,20 +147,24 @@ namespace Jantu
             _pooList.Clear();
         }
 
-        public void SurroundingTiles(Vector2 pos)
+        void RecomputeSurroundingTiles(Vector2 pos)
         {
-            for (int i = 0; i < _SurroundingTiles.Count; i++)
+            var _surroundingVectors = _type.SurroundingTilesPositions;
+            _surroundingTiles.Clear();
+            for (int i = 0; i < _surroundingTiles.Count; i++)
             {
-                Vector2 surroundpos = pos + _SurroundingVectors[i];
-                _SurroundingTiles.Add(world[surroundpos]);
+                Vector2 surroundpos = pos + _surroundingVectors[i];
+                _surroundingTiles.Add(_world[surroundpos]);
             }
         }
-        public void EnclosedTiles(Vector2 pos)
+        void RecomputeEnclosedTiles(Vector2 pos)
         {
-            for (int i = 0; i < _EnclosedTiles.Count; i++)
+            var _enclosedVectors = _type.EnclosedTilesPositions;
+            _enclosedTiles.Clear();
+            for (int i = 0; i < _enclosedTiles.Count; i++)
             {
-                Vector2 closepos = pos + _EnclosedVectors[i];
-                _EnclosedTiles.Add(world[closepos]);
+                Vector2 closepos = pos + _enclosedVectors[i];
+                _enclosedTiles.Add(_world[closepos]);
             }
         }
    }
