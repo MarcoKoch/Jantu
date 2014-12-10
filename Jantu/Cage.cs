@@ -38,7 +38,10 @@ namespace Jantu
         private Balancing _balance;
         private bool Preview;
         private List<Tile> _SurroundingTiles;
+        private List<Vector2> _SurroundingVectors;
         private List<Tile> _EnclosedTiles;
+        private List<Vector2> _EnclosedVectors;
+        private World world;
         public List<CageWallEntity> Walls
         {
             get
@@ -61,7 +64,7 @@ namespace Jantu
             Preview = preview;
             _game = game;
             _balance = balance;
-            World world = game.World;
+            world = game.World;
 
             for (int i = 0; i < wallpositions.Count; i++)
             {
@@ -131,6 +134,23 @@ namespace Jantu
             }
 
             _pooList.Clear();
+        }
+
+        public void SurroundingTiles(Vector2 pos)
+        {
+            for (int i = 0; i < _SurroundingTiles.Count; i++)
+            {
+                Vector2 surroundpos = pos + _SurroundingVectors[i];
+                _SurroundingTiles.Add(world[surroundpos]);
+            }
+        }
+        public void EnclosedTiles(Vector2 pos)
+        {
+            for (int i = 0; i < _EnclosedTiles.Count; i++)
+            {
+                Vector2 closepos = pos + _EnclosedVectors[i];
+                _EnclosedTiles.Add(world[closepos]);
+            }
         }
    }
 }
