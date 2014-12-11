@@ -77,9 +77,7 @@ namespace Jantu
             int layoutWidth = ReadInt(stream);
             int layoutHeight = ReadInt(stream);
 
-            bool horizontalInCage = false;
             bool[] verticalInCage = new bool[layoutWidth];
-
             for (int x = 0; layoutWidth > x; ++x)
                 verticalInCage[x] = false;
 
@@ -96,6 +94,8 @@ namespace Jantu
             // Go through them line after line
             for (int y = 0; layoutHeight > y; ++y)
             {
+                bool horizontalInCage = false;
+
                 // ... and character after character
                 for (int x = 0; Math.Min(lines[y].Length, layoutWidth) > x; ++x)
                 {
@@ -109,15 +109,27 @@ namespace Jantu
                         case '#':
                             _wallPositions.Add(new Vector2(x, y));
 
-                            if (horizontalInCage && (((lines[y].Length - 1) == x) || (x < lines[y].Length && '#' == lines[y][x + 1])))
+                            if (horizontalInCage && (((lines[y].Length - 1) == x) || (x < lines[y].Length && '#' != lines[y][x + 1])))
+                            {
                                 _surroundingTilesPositions.Add(new Vector2(x + 1, y));
-                            else if (!horizontalInCage && (0 == x || (x < lines[y].Length && '#' == lines[y][x-1])))
+                                horizontalInCage = false;
+                            }
+                            else if (!horizontalInCage && (0 == x || (x < lines[y].Length && '#' != lines[y][x - 1])))
+                            {
                                 _surroundingTilesPositions.Add(new Vector2(x - 1, y));
+                                horizontalInCage = true;
+                            }
 
-                            if (verticalInCage[x] && ((layoutHeight - 1) == y || (x < lines[y+1].Length && '#' == lines[y+1][x])))
-                                _surroundingTilesPositions.Add(new Vector2(x, y+1));
-                            else if (!verticalInCage[x] && (0 == y || (x < lines[y-1].Length && '#' == lines[y-1][x])))
-                                _surroundingTilesPositions.Add(new Vector2(x, y-1));
+                            if (verticalInCage[x] && ((layoutHeight - 1) == y || (x < lines[y + 1].Length && '#' != lines[y + 1][x])))
+                            {
+                                _surroundingTilesPositions.Add(new Vector2(x, y + 1));
+                                verticalInCage[x] = false;
+                            }
+                            else if (!verticalInCage[x] && (0 == y || (x < lines[y - 1].Length && '#' != lines[y - 1][x])))
+                            {
+                                _surroundingTilesPositions.Add(new Vector2(x, y - 1));
+                                verticalInCage[x] = true;
+                            }
 
                             break;
 
