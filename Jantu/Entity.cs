@@ -22,6 +22,11 @@
             get { return OnNeedsRedrawQuery(); }
         }
 
+        public bool Blocking
+        {
+            get { return OnBlockingQuery();  }
+        }
+
         /// <summary>
         /// Gets or sets the tile.
         /// </summary>
@@ -78,6 +83,18 @@
         /// Derived classes may override this to signal when they need to be redrawn.
         /// </remarks>
         protected virtual bool OnNeedsRedrawQuery()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Called when <see cref="Jantu.Entity.Blocking"/> is queried.
+        /// </summary>
+        /// <remarks>
+        /// Derived classes may override this to block the path of moving entities.
+        /// The default implementation returns false.
+        /// </remarks>
+        protected virtual bool OnBlockingQuery()
         {
             return false;
         }

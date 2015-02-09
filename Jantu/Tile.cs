@@ -13,8 +13,7 @@ namespace Jantu
     /// </remarks>
     class Tile
     {
-        int _posX;
-        int _posY;
+        private Vector2 _pos;
         Entity _entity;
         World _world;
         Cage _cage;
@@ -25,7 +24,7 @@ namespace Jantu
         /// </summary>
         public int X
         {
-            get { return _posX; }
+            get { return _pos.X; }
         }
 
         /// <summary>
@@ -33,7 +32,15 @@ namespace Jantu
         /// </summary>
         public int Y
         {
-            get { return _posY; }
+            get { return _pos.Y; }
+        }
+
+        /// <summary>
+        /// Gets the world position of the tile.
+        /// </summary>
+        public Vector2 Position
+        {
+            get { return _pos;}
         }
 
 
@@ -47,7 +54,7 @@ namespace Jantu
         /// </summary>
         public int ConsoleX
         {
-            get { return _world.OriginX + _posX; }
+            get { return _world.OriginX + _pos.X; }
         }
 
         /// <summary>
@@ -55,7 +62,15 @@ namespace Jantu
         /// </summary>
         public int ConsoleY
         {
-            get { return _world.OriginY + _posY; }
+            get { return _world.OriginY + _pos.Y; }
+        }
+
+        /// <summary>
+        /// Gets the coordinates of the tile in the console.
+        /// </summary>
+        public Vector2 ConsolePosition
+        {
+            get { return _pos + _world.Origin; }
         }
 
         /// <summary>
@@ -110,6 +125,14 @@ namespace Jantu
         }
 
         /// <summary>
+        /// Returns whether the tile is blocked by a blocking entity.
+        /// </summary>
+        public bool Blocked
+        {
+            get { return Entity != null && Entity.Blocking; }
+        }
+
+        /// <summary>
         /// Gets the tile above <c>this</c>.
         /// </summary>
         /// <value>
@@ -118,7 +141,7 @@ namespace Jantu
         /// </value>
         public Tile Above
         {
-            get { return (0 < _posY) ? _world[_posX, _posY - 1] : null; }
+            get { return (0 < Y) ? _world[X, Y - 1] : null; }
         }
 
         /// <summary>
@@ -130,7 +153,7 @@ namespace Jantu
         /// </value>
         public Tile Below
         {
-            get { return ((_world.Height - 1) > _posY) ? _world[_posX, _posY + 1] : null; }
+            get { return ((_world.Height - 1) > Y) ? _world[X, Y + 1] : null; }
         }
 
         /// <summary>
@@ -142,7 +165,7 @@ namespace Jantu
         /// </value>
         public Tile Left
         {
-            get { return (0 < _posX) ? _world[_posX - 1, _posY] : null; }
+            get { return (0 < X) ? _world[X - 1, Y] : null; }
         }
 
         /// <summary>
@@ -154,7 +177,7 @@ namespace Jantu
         /// </value>
         public Tile Right
         {
-            get { return ((_world.Width - 1) < _posX) ? _world[_posX + 1, _posY] : null; }
+            get { return ((_world.Width - 1) < X) ? _world[X + 1, Y] : null; }
         }
 
         /// <summary>
@@ -172,8 +195,7 @@ namespace Jantu
         public Tile(World world, int x, int y)
         {
             _world = world;
-            _posX = x;
-            _posY = y;
+            _pos = new Vector2(x, y);
             _changed = true;
         }
 

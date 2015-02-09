@@ -156,5 +156,10 @@ namespace Jantu
             Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
             Console.Write(_species.Symbol);
         }
+
+        protected override bool OnBlockingQuery()
+        {
+            return true;
+        }
     }
 }
