@@ -119,6 +119,14 @@ namespace Jantu
         }
 
         /// <summary>
+        /// Returns whether the tile is blocked by a blocking entity.
+        /// </summary>
+        public bool Blocked
+        {
+            get { return Entity != null && Entity.Blocking; }
+        }
+
+        /// <summary>
         /// Gets the tile above <c>this</c>.
         /// </summary>
         /// <value>

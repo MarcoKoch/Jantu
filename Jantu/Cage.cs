@@ -106,7 +106,7 @@ namespace Jantu
             }
         }
 
-        public void removeAnimal(AnimalEntity animal)
+        public void RemoveAnimal(AnimalEntity animal)
         {
             Species animalX = animal.Species;
             for(int i = 0; i <= _animalList.Count; i++)
