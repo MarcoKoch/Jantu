@@ -16,6 +16,18 @@ namespace Jantu
         private int _dx;
         private int _dy;
         private bool _newEndPosition;
+        private Vector2[] _moves = new Vector2[8];
+
+        private List<Vector2> _possibleMoves = new List<Vector2>();
+
+        // 1 - Oben rechts
+        // 2 - Rechts
+        // 3 - Unten Rechts
+        // 4 - Unten
+        // 5 - Unten Links
+        // 6 - Links
+        // 7 - Oben Links
+        // 8 - Oben
 
 
         Random r = new Random();
@@ -28,6 +40,17 @@ namespace Jantu
         public override void Update(double dt)
         {
             World _world = Tile.World;
+
+            _moves[0] = new Vector2(Tile.X + 1, Tile.Y + 1);
+            _moves[1] = new Vector2(Tile.X + 1, Tile.Y);
+            _moves[2] = new Vector2(Tile.X + 1, Tile.Y - 1);
+            _moves[3] = new Vector2(Tile.X, Tile.Y - 1);
+            _moves[4] = new Vector2(Tile.X - 1, Tile.Y - 1);
+            _moves[5] = new Vector2(Tile.X - 1, Tile.Y);
+            _moves[6] = new Vector2(Tile.X - 1, Tile.Y + 1);
+            _moves[7] = new Vector2(Tile.X, Tile.Y + 1);
+
+
             _time += 0.05f;
 
             if (_time >= MovingSpeed)
@@ -85,33 +108,79 @@ namespace Jantu
                     {
                         if (_dx == 1 && _dy == 1)
                         {
-                            _world[Tile.X + 1, Tile.Y + 1].Entity = this;
+                            _possibleMoves.Add(_moves[0]);
+                            _possibleMoves.Add(_moves[1]);
+                            _possibleMoves.Add(_moves[7]);
+                            _possibleMoves.Add(_moves[2]);
+                            _possibleMoves.Add(_moves[6]);
+                            _possibleMoves.Add(_moves[3]);
+                            _possibleMoves.Add(_moves[5]);
+                            _possibleMoves.Add(_moves[4]);
                         }
 
                         if (_dx == 1 && _dy == -1)
                         {
-                            _world[Tile.X + 1, Tile.Y - 1].Entity = this;
+                            _possibleMoves.Add(_moves[2]);
+                            _possibleMoves.Add(_moves[3]);
+                            _possibleMoves.Add(_moves[1]);
+                            _possibleMoves.Add(_moves[4]);
+                            _possibleMoves.Add(_moves[0]);
+                            _possibleMoves.Add(_moves[5]);
+                            _possibleMoves.Add(_moves[7]);
+                            _possibleMoves.Add(_moves[6]);
+
+
                         }
 
                         if (_dx == -1 && _dy == 1)
                         {
-                            _world[Tile.X - 1, Tile.Y + 1].Entity = this;
+                            _possibleMoves.Add(_moves[6]);
+                            _possibleMoves.Add(_moves[5]);
+                            _possibleMoves.Add(_moves[7]);
+                            _possibleMoves.Add(_moves[4]);
+                            _possibleMoves.Add(_moves[9]);
+                            _possibleMoves.Add(_moves[3]);
+                            _possibleMoves.Add(_moves[1]);
+                            _possibleMoves.Add(_moves[2]);
                         }
 
                         if (_dx == -1 && _dy == -1)
                         {
-                            _world[Tile.X - 1, Tile.Y - 1].Entity = this;
+                            _possibleMoves.Add(_moves[4]);
+                            _possibleMoves.Add(_moves[5]);
+                            _possibleMoves.Add(_moves[3]);
+                            _possibleMoves.Add(_moves[6]);
+                            _possibleMoves.Add(_moves[2]);
+                            _possibleMoves.Add(_moves[7]);
+                            _possibleMoves.Add(_moves[1]);
+                            _possibleMoves.Add(_moves[0]);
+
                         }
                     }
                     else
                     {
                         if (_dx == 1)
                         {
-                            _world[Tile.X + 1, Tile.Y].Entity = this;
+                            _possibleMoves.Add(_moves[1]);
+                            _possibleMoves.Add(_moves[2]);
+                            _possibleMoves.Add(_moves[0]);
+                            _possibleMoves.Add(_moves[3]);
+                            _possibleMoves.Add(_moves[7]);
+                            _possibleMoves.Add(_moves[4]);
+                            _possibleMoves.Add(_moves[6]);
+                            _possibleMoves.Add(_moves[5]);
+
                         }
                         if (_dx == -1)
                         {
-                            _world[Tile.X - 1, Tile.Y].Entity = this;
+                            _possibleMoves.Add(_moves[5]);
+                            _possibleMoves.Add(_moves[4]);
+                            _possibleMoves.Add(_moves[6]);
+                            _possibleMoves.Add(_moves[3]);
+                            _possibleMoves.Add(_moves[7]);
+                            _possibleMoves.Add(_moves[2]);
+                            _possibleMoves.Add(_moves[0]);
+                            _possibleMoves.Add(_moves[1]);
                         }
                     }
                 }
@@ -119,14 +188,43 @@ namespace Jantu
                 {
                     if (_dy == 1)
                     {
-                        _world[Tile.X, Tile.Y + 1].Entity = this;
+                        _possibleMoves.Add(_moves[7]);
+                        _possibleMoves.Add(_moves[6]);
+                        _possibleMoves.Add(_moves[0]);
+                        _possibleMoves.Add(_moves[5]);
+                        _possibleMoves.Add(_moves[1]);
+                        _possibleMoves.Add(_moves[4]);
+                        _possibleMoves.Add(_moves[2]);
+                        _possibleMoves.Add(_moves[3]);
                     }
                     if (_dy == -1)
                     {
-                        _world[Tile.X, Tile.Y - 1].Entity = this;
+                        _possibleMoves.Add(_moves[3]);
+                        _possibleMoves.Add(_moves[4]);
+                        _possibleMoves.Add(_moves[2]);
+                        _possibleMoves.Add(_moves[5]);
+                        _possibleMoves.Add(_moves[1]);
+                        _possibleMoves.Add(_moves[6]);
+                        _possibleMoves.Add(_moves[0]);
+                        _possibleMoves.Add(_moves[7]);
                     }
                 }
-                
+
+                for (int i = 0; i < _possibleMoves.Count; i++)
+                {
+                    if (!_world[_possibleMoves[i]].Blocked)
+                    {
+                        _world[_moves[i]].Entity = this;
+                        break;
+                    }
+                }
+
+                _possibleMoves.Clear();
+
+                //Tile.Blocked.Left
+                //Tile.Blocked.Right
+                //Tile.Blocked.Above
+                //Tile.Blocked.Below
                 //Tile.Left.Cage.
                 //Tile.Left.Cage.AddPoo();                           // Poo hinzufügen
                 //Tile.Left.Entity = this;                           // Variante 1
