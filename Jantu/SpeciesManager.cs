@@ -9,10 +9,35 @@ namespace Jantu
     /// Manages all species descriptions in the game.
     /// </summary>
     [Serializable()]
-    class SpeciesManager : ISerializable
+    class SpeciesManager // : ISerializable // Serialization disabled for now
     {
-        Dictionary<string, Species> _normalSpecies;
-        Dictionary<string, Species> _specialSpecies;
+        private Dictionary<string, Species> _normalSpecies;
+        private Dictionary<string, Species> _specialSpecies;
+        private List<Species> _basicSpecies; 
+
+        /// <summary>
+        /// Returns all normal species.
+        /// </summary>
+        public List<Species> NormalSpecies
+        {
+            get { return _normalSpecies.Values.ToList(); }
+        }
+
+        /// <summary>
+        /// Returns all special species.
+        /// </summary>
+        public List<Species> SpecialSpecies
+        {
+            get { return _specialSpecies.Values.ToList(); }
+        }
+
+        /// <summary>
+        /// Returns all basic species (i.e. all that can be bought by the player).
+        /// </summary>
+        public List<Species> BasicSpecies
+        {
+            get { return _basicSpecies; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Jantu.SpeciesManager"/> class.
@@ -23,6 +48,7 @@ namespace Jantu
             _specialSpecies = new Dictionary<string, Species>();
         }
 
+        /* We dropped the serialization for now.
         /// <summary>
         /// Initializes a new instance of the <see cref="Jantu.SpeciesManager"/> class
         /// from serialized data.
@@ -58,6 +84,7 @@ namespace Jantu
             info.AddValue("NormalSpeciesData", Enumerable.ToList(_normalSpecies.Values));
             info.AddValue("SpecialSpeciesData", Enumerable.ToList(_specialSpecies.Values));
         }
+        */
 
         /// <summary>
         /// Add the specified species as standard species.
@@ -82,6 +109,12 @@ namespace Jantu
         public void AddSpecial(Species species)
         {
             _specialSpecies.Add(species.Name, species);
+        }
+
+        public void AddBasic(Species species)
+        {
+            _normalSpecies.Add(species.Name, species);
+            _basicSpecies.Add(species);
         }
 
         /// <summary>
