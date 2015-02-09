@@ -50,10 +50,10 @@
 
 
 
-        public Game(int worldWidth, int worldHeight, int worldOriginX, int worldOriginY)
+        public Game(int worldWidth, int worldHeight, Vector2 worldOrigin)
         {
             _data = new DataManager();
-            _world = new World(worldWidth, worldHeight, worldOriginX, worldOriginY);
+            _world = new World(worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
         }
     }

@@ -15,5 +15,11 @@
         {
             return new Vector2(lhs.X + rhs.X, lhs.Y + rhs.Y);
         }
+
+        public void Set(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
