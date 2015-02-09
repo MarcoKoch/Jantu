@@ -85,6 +85,9 @@ namespace Jantu
 
             RecomputeEnclosedTiles(pos);
             RecomputeSurroundingTiles(pos);
+
+            foreach (var tile in EnclosedTiles)
+                tile.Cage = this;
         }
 
         public void addAnimal(AnimalEntity animal)
@@ -151,7 +154,7 @@ namespace Jantu
         {
             var _surroundingVectors = _type.SurroundingTilesPositions;
             _surroundingTiles.Clear();
-            for (int i = 0; i < _surroundingTiles.Count; i++)
+            for (int i = 0; i < _surroundingVectors.Count; i++)
             {
                 Vector2 surroundpos = pos + _surroundingVectors[i];
                 _surroundingTiles.Add(_world[surroundpos]);
@@ -161,7 +164,7 @@ namespace Jantu
         {
             var _enclosedVectors = _type.EnclosedTilesPositions;
             _enclosedTiles.Clear();
-            for (int i = 0; i < _enclosedTiles.Count; i++)
+            for (int i = 0; i < _enclosedVectors.Count; i++)
             {
                 Vector2 closepos = pos + _enclosedVectors[i];
                 _enclosedTiles.Add(_world[closepos]);
