@@ -36,6 +36,12 @@ namespace Jantu
             get { return _posY; }
         }
 
+
+        /*public Vector2 Position
+        {
+            get { re}
+        }*/
+
         /// <summary>
         /// Gets the x coordinate of the tile in the console.
         /// </summary>
