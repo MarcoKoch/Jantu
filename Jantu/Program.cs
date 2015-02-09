@@ -24,8 +24,10 @@ namespace Jantu
 
             Species Cow = new Species("Cow");
             AnimalEntity cow1 = new AnimalEntity(Cow);
+            AnimalEntity cow2 = new AnimalEntity(Cow);
             Cow.Symbol = 'c';
             game.World[10, 10].Entity = cow1;
+            game.World[11, 11].Entity = cow2;
             // End of test code
 
             watch.Start();
