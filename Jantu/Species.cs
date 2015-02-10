@@ -245,7 +245,7 @@ namespace Jantu
         public bool Attacks(Species species)
         {
             // The comparision by object identity is intentional!
-            return _enemies.Exists(s => s == species);
+            return _enemies.Exists(s => Object.ReferenceEquals(s, species));
         }
 
         /// <summary>
@@ -258,7 +258,8 @@ namespace Jantu
         public bool BreedsWith(Species species)
         {
             // The comparision by object identity is intentional!
-            return _breedingPartners.Exists(s => s == species);
+            return Object.ReferenceEquals(species, this) 
+                || _breedingPartners.Exists(s => Object.ReferenceEquals(s, species));
         }
 
         /// <summary>
