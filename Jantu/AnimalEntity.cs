@@ -160,7 +160,7 @@ namespace Jantu
             return true;
         }
 
-        protected override void OnCollision(Entity other)
+        protected override bool OnCollision(Entity other)
         {
             // Can we breed with it?
             var otherAnimal = other as AnimalEntity;
@@ -171,12 +171,19 @@ namespace Jantu
                 // If we can't breed with it, eat it xD
                 if (child == null)
                     Eat(otherAnimal);
+
+                return true;
             }
 
             // No breeding... but eating?
             var food = other as FoodEntity;
             if (food != null)
+            {
                 Eat(food);
+                return true;
+            }
+
+            return false;
         }
     }
 }
