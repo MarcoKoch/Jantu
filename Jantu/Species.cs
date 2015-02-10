@@ -12,7 +12,7 @@ namespace Jantu
     /// seen on screen are described by <see cref="Jantu.AnimalEntity"/>.
     /// </remarks>
 	[Serializable()]
-    class Species : ISerializable
+    class Species // : ISerializable // Serialization disabled for now
     {
         string _name;
         double _movingSpeed         = 0.0;
@@ -121,6 +121,7 @@ namespace Jantu
             _breedingPartners = new List<Species>();
         }
 		
+        /* // Serialization disabled for now
         /// <summary>
         /// Initializes a new instance of the <see cref="Jantu.Species"/> class
         /// from serialized data.
@@ -209,6 +210,7 @@ namespace Jantu
                 breedingPartnerNames.Add(breedingPartner.Name);
             info.AddValue("BreedingPartners", breedingPartnerNames);
 		}
+         */
 
         /// <summary>
         /// Returns whether animals of this species eat the given type of food.

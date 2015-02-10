@@ -20,6 +20,15 @@ namespace Jantu
             var balance = new Balancing();
             var cageType = CageType.ReadFromFile("../../../data/cages/cross.cage");
             var cage = new Cage(cageType, new Vector2(1,1), game, balance, false);
+
+            var species = new Species("Cow");
+            species.Symbol = 'c';
+
+            var cow1 = new AnimalEntity(species);
+            var cow2 = new AnimalEntity(species);
+
+            cow1.Tile = cage.EnclosedTiles[0];
+            cow2.Tile = cage.EnclosedTiles[2];
             // End of test code
 
             watch.Start();

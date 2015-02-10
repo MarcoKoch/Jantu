@@ -212,12 +212,12 @@ namespace Jantu
                 for (int y = Y - 1; Y + 1 > y; ++y)
                 {
                     Tile t = _world[x, y];
-                    if (null != t && null != t.Entity)
+                    if (null != t && null == t.Entity)
                         freeTiles.Add(t);
                 }
             }
 
-            return freeTiles[rand.Next(0, freeTiles.Count)];
+            return (freeTiles.Count != 0) ? freeTiles[rand.Next(0, freeTiles.Count)] : null;
         }
 
         /// <summary>

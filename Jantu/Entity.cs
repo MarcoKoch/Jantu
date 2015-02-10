@@ -36,7 +36,11 @@
         public Tile Tile
         {
             get { return _tile; }
-            set { value.Entity = this; }
+            set
+            {
+                if (value != null)
+                    value.Entity = this;
+            }
         }
 
         /// <summary>

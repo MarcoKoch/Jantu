@@ -84,14 +84,18 @@ namespace Jantu
         /// <returns>
         /// The newly created animal, if successful. <c>null</c> if breeding failed.
         /// </returns>
-        public AnimalEntity TryBreedWith(AnimalEntity other, SpeciesManager allSpecies)
+        public AnimalEntity TryBreedWith(AnimalEntity other)
         {
             if (!Species.BreedsWith(other.Species))
                 return null;
             
             Tile newAnimalTile = Tile.FindRandomEmptyNeighbour(Tile.World.Game.Random);
             if (null != newAnimalTile)
-                return new AnimalEntity(Species.BreedWith(other.Species, allSpecies, Tile.World.Game.Random));
+            {
+                var child = new AnimalEntity(Species.BreedWith(other.Species, Tile.World.Game.Data.Species, Tile.World.Game.Random));
+                child.Tile = newAnimalTile;
+                return child;
+            }
 
             return null;
         }
@@ -166,16 +170,16 @@ namespace Jantu
             var otherAnimal = other as AnimalEntity;
             if (otherAnimal != null)
             {
-                var child = TryBreedWith(otherAnimal, Tile.World.Game.Data.Species);
+                var child = TryBreedWith(otherAnimal);
 
-                // If we can't breed with it, eat it xD
+                // If we can't breed with it, let's eat it xD
                 if (child == null)
                     Eat(otherAnimal);
 
                 return true;
             }
 
-            // No breeding... but eating?
+            // Is it edible?
             var food = other as FoodEntity;
             if (food != null)
             {
