@@ -14,6 +14,14 @@ namespace Jantu
         Dictionary<string, FoodKind> _kinds;
 
         /// <summary>
+        /// Returns a list of all food kinds.
+        /// </summary>
+        public List<FoodKind> FoodKinds
+        {
+            get { return _kinds.Values.ToList(); }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Jantu.FoodKindManager"/> class.
         /// </summary>
         public FoodKindManager()

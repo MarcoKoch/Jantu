@@ -71,7 +71,7 @@
         /// This is for internal use by <see cref="Jantu.Tile"/>. Do not call this
         /// method manually.
         /// </remarks>
-        public void OnTileChanged(Tile tile)
+        public virtual void OnTileChanged(Tile tile)
         {
             _tile = tile;
         }
