@@ -41,6 +41,7 @@ namespace Jantu
         private List<Tile> _enclosedTiles = new List<Tile>();
         private World _world;
         private Game _game;
+        private Random _random;
 
         public List<CageWallEntity> Walls
         {
@@ -64,6 +65,51 @@ namespace Jantu
         List<AnimalEntity> _animalList = new List<AnimalEntity>();
         List<Species> _speciesList = new List<Species>();
         List<CageWallEntity> _walls = new List<CageWallEntity>();
+        List<VisitorEntity> _visitorList = new List<VisitorEntity>();
+
+        private int _numCurrentPeeps;
+
+
+        public void Update()
+        {
+            if (_numCurrentPeeps < NumPeeps)
+                CreateNewVisitor();
+            else if (_numCurrentPeeps > NumPeeps)
+                RemoveVisitor();
+        }
+
+        private void CreateNewVisitor()
+        {
+            VisitorEntity newVisitor = new VisitorEntity();
+            _visitorList.Add(newVisitor);
+
+            List<Tile> freeTiles = new List<Tile>();
+            foreach (Tile t in SurroundingTiles)
+            {
+                if (t.Entity != null)
+                {
+                    freeTiles.Add(t);
+                }
+            }
+
+            int index = _random.Next(freeTiles.Count);
+            Tile targetTile = freeTiles[index];
+            targetTile.Entity = newVisitor;
+         }
+
+        private void RemoveVisitor()
+        {
+            if (_visitorList.Count != 0)
+            {
+
+                int index = _random.Next(_visitorList.Count);
+                VisitorEntity visitor = _visitorList[index];
+
+                _visitorList.Remove(visitor);
+
+                visitor.Tile = null;
+            }
+        }
 
         public Cage(CageType type, Vector2 pos, Game game, Balancing balance, bool preview)
         {
