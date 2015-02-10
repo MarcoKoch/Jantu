@@ -15,6 +15,7 @@ namespace Jantu
             Game game = new Game(Console.WindowWidth - 20, Console.WindowHeight-3,  0, 3);
             InfoBar menu2 = new InfoBar(game,Console.WindowWidth-22,3);
             Stopwatch watch = new Stopwatch();
+            KeyPressManager key = new KeyPressManager(Console.WindowWidth - 20, Console.WindowHeight-3);
 
             // Test code
             var balance = new Balancing();
@@ -30,6 +31,12 @@ namespace Jantu
                 double dt = 0.001 * watch.ElapsedMilliseconds;
 
                 game.World.Update(dt);
+
+                ///<summary>
+                ///key input handling
+                ///</summary>
+                key.KeyInput();
+
                 game.World.Draw();
 
                 if (1.0 / _fps * 0.001 > dt)
