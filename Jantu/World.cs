@@ -13,6 +13,15 @@ namespace Jantu
         Tile[,] _tiles;
         ConsoleColor _bgColor = ConsoleColor.Black;
         bool _changed = false;
+        Game _game;
+
+        /// <summary>
+        /// Gets the game to which the world belongs.
+        /// </summary>
+        public Game Game
+        {
+            get { return _game; }
+        }
 
         /// <summary>
         /// Gets the width of the world.
@@ -109,8 +118,10 @@ namespace Jantu
         /// <exception cref='ArgumentOutOfRangeException'>
         /// If the size of the world would be negative or zero.
         /// </exception>
-        public World(int width, int height, Vector2 origin)
+        public World(Game game, int width, int height, Vector2 origin)
         {
+            _game = game;
+
             if (0 >= width || 0 >= height)
                 throw new ArgumentOutOfRangeException("World dimensions");
 

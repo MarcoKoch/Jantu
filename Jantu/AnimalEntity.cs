@@ -10,6 +10,7 @@ namespace Jantu
         Species _species;
         uint    _hunger;
         uint    _health;
+        Random  _rand;
 
         /// <summary>
         /// Gets the species.
@@ -75,9 +76,6 @@ namespace Jantu
         /// <param name='allSpecies'>
         /// All species.
         /// </param>
-        /// <param name='rand'>
-        /// A random number generator to be used.
-        /// </param>
         /// <remarks>
         /// Breeding may fail if no either the two species can't breed with each other or there is no
         /// free tile beside the animal. If breeding succeeds, a new animal is created and placed at a random
@@ -86,14 +84,14 @@ namespace Jantu
         /// <returns>
         /// The newly created animal, if successful. <c>null</c> if breeding failed.
         /// </returns>
-        public AnimalEntity TryBreedWith(AnimalEntity other, SpeciesManager allSpecies, Random rand)
+        public AnimalEntity TryBreedWith(AnimalEntity other, SpeciesManager allSpecies)
         {
             if (!Species.BreedsWith(other.Species))
                 return null;
             
-            Tile newAnimalTile = Tile.FindRandomEmptyNeighbour(rand);
+            Tile newAnimalTile = Tile.FindRandomEmptyNeighbour(Tile.World.Game.Random);
             if (null != newAnimalTile)
-                return new AnimalEntity(Species.BreedWith(other.Species, allSpecies, rand));
+                return new AnimalEntity(Species.BreedWith(other.Species, allSpecies, Tile.World.Game.Random));
 
             return null;
         }
@@ -160,6 +158,25 @@ namespace Jantu
         protected override bool OnBlockingQuery()
         {
             return true;
+        }
+
+        protected override void OnCollision(Entity other)
+        {
+            // Can we breed with it?
+            var otherAnimal = other as AnimalEntity;
+            if (otherAnimal != null)
+            {
+                var child = TryBreedWith(otherAnimal, Tile.World.Game.Data.Species);
+
+                // If we can't breed with it, eat it xD
+                if (child == null)
+                    Eat(otherAnimal);
+            }
+
+            // No breeding... but eating?
+            var food = other as FoodEntity;
+            if (food != null)
+                Eat(food);
         }
     }
 }

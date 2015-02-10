@@ -1,4 +1,6 @@
-﻿namespace Jantu
+﻿using System;
+
+namespace Jantu
 {
     class Game
     {
@@ -13,6 +15,15 @@
         private int _day;
         private int _animals;
         private int _visitors;
+
+        /// <summary>
+        /// A random number generator that can be used throughout the game.
+        /// </summary>
+        /// <remarks>
+        /// This is provided in a central location, so we do not wast memory for thousands of Random objects
+        /// throughout the game.
+        /// </remarks>
+        public readonly Random Random;
 
         public DataManager Data
         {
@@ -52,8 +63,9 @@
 
         public Game(int worldWidth, int worldHeight, Vector2 worldOrigin)
         {
+            Random = new Random();
             _data = new DataManager();
-            _world = new World(worldWidth, worldHeight, worldOrigin);
+            _world = new World(this, worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
         }
     }
