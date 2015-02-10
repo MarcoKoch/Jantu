@@ -31,6 +31,10 @@ namespace Jantu
         // 7 - Oben Links
         // 8 - Oben
 
+        // Endposition muss ggf überschrieben werden,
+        // wenn das Animal ein bestimmtes Ziel hat
+
+
 
         Random r = new Random();
 
@@ -232,7 +236,7 @@ namespace Jantu
             }
         }
 
-        public void LookForEndPosition()
+        public void LookForEndPosition() 
         {
             while (!_newEndPosition)
             {
