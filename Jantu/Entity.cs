@@ -62,6 +62,19 @@
         }
 
         /// <summary>
+        /// Call this to trigger a collision with an other entity.
+        /// </summary>
+        /// <remarks>
+        /// This calls <see cref="Jantu.Entity.OnCollision"/> on both, this and other.
+        /// </remarks>
+        /// <param name="other">The other entitiy with which to collide</param>
+        public virtual void CollideWith(Entity other)
+        {
+            OnCollision(other);
+            other.OnCollision(this);
+        }
+
+        /// <summary>
         /// Called when the tile of the entity changed.
         /// </summary>
         /// <param name='tile'>
@@ -71,7 +84,7 @@
         /// This is for internal use by <see cref="Jantu.Tile"/>. Do not call this
         /// method manually.
         /// </remarks>
-        public virtual void OnTileChanged(Tile tile)
+        protected virtual void OnTileChanged(Tile tile)
         {
             _tile = tile;
         }
@@ -97,6 +110,15 @@
         protected virtual bool OnBlockingQuery()
         {
             return false;
+        }
+
+        /// <summary>
+        /// Called if the entity collides with an other one.
+        /// </summary>
+        /// <param name="other">The other entity with which the collision occured</param>
+        protected virtual void OnCollision(Entity other)
+        {
+            return;
         }
     }
 }
