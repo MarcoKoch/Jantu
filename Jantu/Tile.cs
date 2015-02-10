@@ -92,7 +92,7 @@ namespace Jantu
             set
             {
                 if (null != _entity)
-                    _entity.OnTileChanged(null);
+                    _entity.SetTile(null);
 
                 _entity = value;
                 _changed = true;
@@ -104,7 +104,7 @@ namespace Jantu
                         value.Tile._changed = true;
                         value.Tile._entity = null;
                     }
-                    value.OnTileChanged(this);
+                    value.SetTile(this);
                 }
             }
         }

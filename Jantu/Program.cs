@@ -32,6 +32,9 @@ namespace Jantu
                 game.World.Update(dt);
                 game.World.Draw();
 
+                // This is to avoid an 'empty' line at the bottom of the screen
+                Console.SetCursorPosition(0,0);
+
                 if (1.0 / _fps * 0.001 > dt)
                     Thread.Sleep(Math.Max(0,(int)((long)(1.0 / _fps * 1000.0) - watch.ElapsedMilliseconds)));
                 watch.Restart();
