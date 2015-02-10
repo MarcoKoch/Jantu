@@ -82,8 +82,8 @@
         /// <param name="other">The other entitiy with which to collide</param>
         public virtual void CollideWith(Entity other)
         {
-            OnCollision(other);
-            other.OnCollision(this);
+            if(OnCollision(other))
+                other.OnCollision(this);
         }
 
         /// <summary>
@@ -128,9 +128,9 @@
         /// Called if the entity collides with an other one.
         /// </summary>
         /// <param name="other">The other entity with which the collision occured</param>
-        protected virtual void OnCollision(Entity other)
+        protected virtual bool OnCollision(Entity other)
         {
-            return;
+            return false;
         }
     }
 }

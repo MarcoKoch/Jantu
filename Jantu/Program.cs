@@ -23,7 +23,7 @@ namespace Jantu
             var b = CageType.ReadFromFile("../../../data/cages/4x16.cage");
             var c = CageType.ReadFromFile("../../../data/cages/6x4.cage");
             var d = CageType.ReadFromFile("../../../data/cages/12x4.cage");
-            var e = CageType.ReadFromFile("../../../data/cages/4x12.cage");
+            var e = CageType.ReadFromFile("../../../data/cages/4x13.cage");
             var f = CageType.ReadFromFile("../../../data/cages/7x7.cage");
 
             var cage1 = new Cage(a, new Vector2(1, 1), game, balance, false);
@@ -35,11 +35,11 @@ namespace Jantu
             var cage7 = new Cage(a, new Vector2(5, 13), game, balance, false);
             var cage8 = new Cage(a, new Vector2(1, 13), game, balance, false);
             var cage9 = new Cage(a, new Vector2(1, 9), game, balance, false);
-            var cage10 = new Cage(b, new Vector2(15, 1), game, balance, false);
-            var cage11 = new Cage(b, new Vector2(23, 1), game, balance, false);
-            var cage12 = new Cage(c, new Vector2(18, 1), game, balance, false);
+            var cage10 = new Cage(e, new Vector2(15, 4), game, balance, false);
+            var cage11 = new Cage(e, new Vector2(23, 4), game, balance, false);
+            var cage12 = new Cage(d, new Vector2(15, 1), game, balance, false);
             var cage13 = new Cage(c, new Vector2(18, 8), game, balance, false);
-            var cage14 = new Cage(e, new Vector2(38, 5), game, balance, false);
+            var cage14 = new Cage(e, new Vector2(38, 4), game, balance, false);
             var cage15 = new Cage(d, new Vector2(34, 1), game, balance, false);
             var cage16 = new Cage(e, new Vector2(47, 1), game, balance, false);
             var cage17 = new Cage(d, new Vector2(47, 13), game, balance, false);

@@ -209,10 +209,10 @@ namespace Jantu
 
                     for (int i = 0; i < _possibleMoves.Count; i++)
                     {
-                        /*if (_world[_possibleMoves[i]].Blocked)
+                        if (_world[_possibleMoves[i]].Blocked)
                         {
                             CollideWith(_world[_possibleMoves[i]].Entity);
-                        }*/
+                        }
 
                         if (!_world[_possibleMoves[i]].Blocked)
                         {
