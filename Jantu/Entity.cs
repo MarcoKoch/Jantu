@@ -62,6 +62,18 @@
         }
 
         /// <summary>
+        /// Sets the current tile of the entity.
+        /// </summary>
+        /// <remarks>
+        /// This mothod is for internal use by <cref="Tile.Entity"> only. Do not call this method manually.
+        /// </remarks>
+        /// <param name="tile"></param>
+        public void SetTile(Tile tile)
+        {
+            OnTileChanged(tile);
+        }
+
+        /// <summary>
         /// Call this to trigger a collision with an other entity.
         /// </summary>
         /// <remarks>
