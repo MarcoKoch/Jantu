@@ -59,6 +59,7 @@
     <Compile Include="SpeciesManager.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Vector2.cs" />
+    <Compile Include="VisitorEntity.cs" />
     <Compile Include="World.cs" />
     <Compile Include="FoodKindManager.cs" />
     <Compile Include="DataManager.cs" />
