@@ -56,5 +56,6 @@
             _world = new World(worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
         }
+
     }
 }

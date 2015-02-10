@@ -17,6 +17,7 @@ namespace Jantu
             Stopwatch watch = new Stopwatch();
 
             // Test code
+
             var balance = new Balancing();
             var a = CageType.ReadFromFile("../../../data/cages/4x4.cage");
             var b = CageType.ReadFromFile("../../../data/cages/4x16.cage");
@@ -24,8 +25,6 @@ namespace Jantu
             var d = CageType.ReadFromFile("../../../data/cages/12x4.cage");
             var e = CageType.ReadFromFile("../../../data/cages/4x12.cage");
             var f = CageType.ReadFromFile("../../../data/cages/7x7.cage");
-            //var U = CageType.ReadFromFile("../../../data/cages/U_shape.cage");
-            //var square = CageType.ReadFromFile("../../../data/cages/square.cage");
 
             var cage1 = new Cage(a, new Vector2(1, 1), game, balance, false);
             var cage2 = new Cage(a, new Vector2(5, 1), game, balance, false);
@@ -46,9 +45,6 @@ namespace Jantu
             var cage17 = new Cage(d, new Vector2(47, 13), game, balance, false);
             var cage18 = new Cage(e, new Vector2(55, 1), game, balance, false);
             var cage19 = new Cage(f, new Vector2(29, 7), game, balance, false);
-            //var cage3 = new Cage(N, new Vector2(1, 1), game, balance, false);
-            //var cage4 = new Cage(T, new Vector2(1, 1), game, balance, false);
-            //var cage5 = new Cage(U, new Vector2(1, 1), game, balance, false);
 
             Species N = new Species("N");
             Species Cow = new Species("Cow");
@@ -66,9 +62,9 @@ namespace Jantu
             AnimalEntity n10 = new AnimalEntity(N);
             AnimalEntity n11 = new AnimalEntity(N);
             AnimalEntity n12 = new AnimalEntity(N);
-            AnimalEntity n13= new AnimalEntity(N);
-            AnimalEntity n14= new AnimalEntity(N);
-            AnimalEntity n15= new AnimalEntity(N);
+            AnimalEntity n13 = new AnimalEntity(N);
+            AnimalEntity n14 = new AnimalEntity(N);
+            AnimalEntity n15 = new AnimalEntity(N);
             AnimalEntity n16 = new AnimalEntity(N);
 
             N.Symbol = 'N';

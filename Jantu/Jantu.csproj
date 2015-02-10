@@ -59,6 +59,7 @@
     <Compile Include="SpatialAStar.cs" />
     <Compile Include="Species.cs" />
     <Compile Include="SpeciesManager.cs" />
+    <Compile Include="SpeciesType.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="VisitorEntity.cs" />
