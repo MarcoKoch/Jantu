@@ -207,9 +207,9 @@ namespace Jantu
         {
             List<Tile> freeTiles = new List<Tile>();
 
-            for (int x = X - 1; X + 1 > x; ++x)
+            for (int x = X - 1; X + 1 >= x; ++x)
             {
-                for (int y = Y - 1; Y + 1 > y; ++y)
+                for (int y = Y - 1; Y + 1 >= y; ++y)
                 {
                     Tile t = _world[x, y];
                     if (null != t && null == t.Entity)

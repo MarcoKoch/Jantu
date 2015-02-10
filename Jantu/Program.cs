@@ -30,6 +30,7 @@ namespace Jantu
 
             cow1.Tile = cage.EnclosedTiles[0];
             cow2.Tile = cage.EnclosedTiles[2];
+
             // End of test code
 
             watch.Start();
