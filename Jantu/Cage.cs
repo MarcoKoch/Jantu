@@ -185,15 +185,16 @@ namespace Jantu
             _pooList.Add(poo);
         }
 
+        public void RemovePoo(PooEntity poo)
+        {
+            --PooCount;
+            _pooList.Remove(poo);
+        }
+
         public void Clean ()
         {
-            for (int i = 0; i < _pooList.Count; i++)
-            {
-                PooEntity poo = _pooList[i];
-                poo.Tile.Entity = null;
-            }
-
-            _pooList.Clear();
+            foreach (var poo in _pooList)
+                poo.Tile = null; // This calls RemovePoo() implicitly
         }
 
         void RecomputeSurroundingTiles(Vector2 pos)

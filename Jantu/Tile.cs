@@ -203,7 +203,7 @@ namespace Jantu
         /// <param name='rand'>
         /// Random number generator to be used.
         /// </param>
-        public Tile FindRandomEmptyNeighbour(Random rand)
+        public Tile FindRandomEmptyNeighbour()
         {
             List<Tile> freeTiles = new List<Tile>();
 
@@ -217,7 +217,7 @@ namespace Jantu
                 }
             }
 
-            return (freeTiles.Count != 0) ? freeTiles[rand.Next(0, freeTiles.Count)] : null;
+            return (freeTiles.Count != 0) ? freeTiles[World.Game.Random.Next(0, freeTiles.Count)] : null;
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Jantu
     {
         string _name;
         double _movingSpeed         = 0.0;
-        double _excrementRate       = 0.1;
+        double _poo_period       = 0.1;
         double _foodRate            = 0.1;
         double _mutationProbability = 0.0;
         int _maxHealth              = 100;
@@ -68,10 +68,10 @@ namespace Jantu
         /// <value>
         /// The excrement rate.
         /// </value>
-        public double ExcrementRate
+        public double PooPeriod
         {
-            get { return _excrementRate; }
-            set { _excrementRate = value; }
+            get { return _poo_period; }
+            set { _poo_period = value; }
         }
 
         /// <summary>

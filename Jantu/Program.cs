@@ -23,6 +23,7 @@ namespace Jantu
 
             var species = new Species("Cow");
             species.Symbol = 'c';
+            species.PooPeriod = 1;
 
             var cow1 = new AnimalEntity(species);
             var cow2 = new AnimalEntity(species);

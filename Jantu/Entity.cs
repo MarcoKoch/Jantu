@@ -74,7 +74,9 @@
         /// <param name="tile"></param>
         public void SetTile(Tile tile)
         {
-            OnTileChanged(tile);
+            var oldTile = _tile;
+            _tile = tile;
+            OnTileChanged(oldTile);
         }
 
         /// <summary>
@@ -93,16 +95,12 @@
         /// <summary>
         /// Called when the tile of the entity changed.
         /// </summary>
-        /// <param name='tile'>
-        /// New tile.
+        /// <param name='oldTile'>
+        /// The previous tile.
         /// </param>
-        /// <remarks>
-        /// This is for internal use by <see cref="Jantu.Tile"/>. Do not call this
-        /// method manually.
-        /// </remarks>
-        protected virtual void OnTileChanged(Tile tile)
+        protected virtual void OnTileChanged(Tile oldTile)
         {
-            _tile = tile;
+            return;
         }
 
         /// <summary>

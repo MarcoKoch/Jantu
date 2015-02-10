@@ -8,9 +8,9 @@ namespace Jantu
     class AnimalEntity : Entity
     {
         Species _species;
-        uint    _hunger;
-        uint    _health;
-        Random  _rand;
+        int     _hunger;
+        int     _health;
+        double _timeSinceLastPoo;
 
         /// <summary>
         /// Gets the species.
@@ -29,7 +29,7 @@ namespace Jantu
         /// <value>
         /// The hunger.
         /// </value>
-        public uint Hunger
+        public int Hunger
         {
             get { return _hunger; }
             set { _hunger = value; }
@@ -41,7 +41,7 @@ namespace Jantu
         /// <value>
         /// The health.
         /// </value>
-        public uint Health
+        public int Health
         {
             get { return _health; }
             set
@@ -89,7 +89,7 @@ namespace Jantu
             if (!Species.BreedsWith(other.Species))
                 return null;
             
-            Tile newAnimalTile = Tile.FindRandomEmptyNeighbour(Tile.World.Game.Random);
+            Tile newAnimalTile = Tile.FindRandomEmptyNeighbour();
             if (null != newAnimalTile)
             {
                 var child = new AnimalEntity(Species.BreedWith(other.Species, Tile.World.Game.Data.Species, Tile.World.Game.Random));
@@ -138,21 +138,32 @@ namespace Jantu
         /// tile beside the animal. If successful, the poo is placed on
         /// a random neighbouring tile.
         /// </remarks>
-        public PooEntity TryPoo(Random rand)
+        public PooEntity TryPoo()
         {
-            Tile pooTile = Tile.FindRandomEmptyNeighbour(rand);
+            Tile pooTile = Tile.FindRandomEmptyNeighbour();
             if (null != pooTile)
             {
-                //pooTile.AddPooToCage();
-                return new PooEntity();
+                var poo = new PooEntity();
+                poo.Tile = pooTile;
+                return poo;
             }
 
             return null;
         }
 
-        /// <summary>
-        /// Draws the animal.
-        /// </summary>
+        public override void Update(double dt)
+        {
+            base.Update(dt);
+
+            // Is there some internal pressure?
+            _timeSinceLastPoo += dt;
+            if (_timeSinceLastPoo >= Species.PooPeriod)
+            {
+                if (TryPoo() != null)
+                    _timeSinceLastPoo = 0;
+            }
+        }
+
         public override void Draw()
         {
             Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
