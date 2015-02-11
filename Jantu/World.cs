@@ -7,13 +7,21 @@ namespace Jantu
     /// </summary>
     class World
     {
-        int _originX;
-        int _originY;
+        Vector2 _origin;
         int _width;
         int _height;
         Tile[,] _tiles;
         ConsoleColor _bgColor = ConsoleColor.Black;
         bool _changed = false;
+        Game _game;
+
+        /// <summary>
+        /// Gets the game to which the world belongs.
+        /// </summary>
+        public Game Game
+        {
+            get { return _game; }
+        }
 
         /// <summary>
         /// Gets the width of the world.
@@ -36,7 +44,7 @@ namespace Jantu
         /// </summary>
         public int OriginX
         {
-            get { return _originX; }
+            get { return _origin.X; }
         }
 
         /// <summary>
@@ -44,7 +52,12 @@ namespace Jantu
         /// </summary>
         public int OriginY
         {
-            get { return _originY; }
+            get { return _origin.Y; }
+        }
+
+        public Vector2 Origin
+        {
+            get { return _origin; }
         }
 
         public ConsoleColor BackgroundColor
@@ -105,17 +118,18 @@ namespace Jantu
         /// <exception cref='ArgumentOutOfRangeException'>
         /// If the size of the world would be negative or zero.
         /// </exception>
-        public World(int width, int height, int originX, int originY)
+        public World(Game game, int width, int height, Vector2 origin)
         {
+            _game = game;
+
             if (0 >= width || 0 >= height)
                 throw new ArgumentOutOfRangeException("World dimensions");
 
-            if (0 > originX || (Console.WindowWidth - 1) < originX ||
-                0 > originY || (Console.WindowHeight - 1) < originY)
+            if (0 > origin.X || (Console.WindowWidth - 1) < origin.X ||
+                0 > origin.Y || (Console.WindowHeight - 1) < origin.Y)
                 throw new ArgumentOutOfRangeException("World origin location");
 
-            _originX = originX;
-            _originY = originY;
+            _origin = origin;
             _width = width;
             _height = height;
             _tiles = new Tile[width,height];

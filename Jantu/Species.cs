@@ -12,11 +12,11 @@ namespace Jantu
     /// seen on screen are described by <see cref="Jantu.AnimalEntity"/>.
     /// </remarks>
 	[Serializable()]
-    class Species : ISerializable
+    class Species // : ISerializable // Serialization disabled for now
     {
         string _name;
         double _movingSpeed         = 0.0;
-        double _excrementRate       = 0.1;
+        double _poo_period       = 0.1;
         double _foodRate            = 0.1;
         double _mutationProbability = 0.0;
         int _maxHealth              = 100;
@@ -68,10 +68,10 @@ namespace Jantu
         /// <value>
         /// The excrement rate.
         /// </value>
-        public double ExcrementRate
+        public double PooPeriod
         {
-            get { return _excrementRate; }
-            set { _excrementRate = value; }
+            get { return _poo_period; }
+            set { _poo_period = value; }
         }
 
         /// <summary>
@@ -121,6 +121,7 @@ namespace Jantu
             _breedingPartners = new List<Species>();
         }
 		
+        /* // Serialization disabled for now
         /// <summary>
         /// Initializes a new instance of the <see cref="Jantu.Species"/> class
         /// from serialized data.
@@ -209,6 +210,7 @@ namespace Jantu
                 breedingPartnerNames.Add(breedingPartner.Name);
             info.AddValue("BreedingPartners", breedingPartnerNames);
 		}
+         */
 
         /// <summary>
         /// Returns whether animals of this species eat the given type of food.
@@ -245,7 +247,7 @@ namespace Jantu
         public bool Attacks(Species species)
         {
             // The comparision by object identity is intentional!
-            return _enemies.Exists(s => s == species);
+            return _enemies.Exists(s => Object.ReferenceEquals(s, species));
         }
 
         /// <summary>
@@ -258,7 +260,8 @@ namespace Jantu
         public bool BreedsWith(Species species)
         {
             // The comparision by object identity is intentional!
-            return _breedingPartners.Exists(s => s == species);
+            return Object.ReferenceEquals(species, this) 
+                || _breedingPartners.Exists(s => Object.ReferenceEquals(s, species));
         }
 
         /// <summary>

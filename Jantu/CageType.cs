@@ -1,10 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System;
 
 namespace Jantu
 {
+    class ParseError : Exception
+    {
+        public ParseError(int line, string message) :
+            base("Parse Error in line " + line + ": " + message)
+        {
+        }
+    }
+
     class CageType
     {
         int _maxAttractivity = 100;
+        List<Vector2> _wallPositions = new List<Vector2>();
+        List<Vector2> _surroundingTilesPositions = new List<Vector2>();
+        List<Vector2> _enclosedTilesPositions = new List<Vector2>();
+
+        CageType() {}
 
         /// <summary>
         /// Returns the maximum attractivity of cages of this type.
@@ -19,11 +34,7 @@ namespace Jantu
         /// </summary>
         public List<Vector2> WallPositions
         {
-            get
-            {
-                // TODO
-                return new List<Vector2>();
-            }
+            get { return _wallPositions; }
         }
 
         /// <summary>
@@ -31,10 +42,104 @@ namespace Jantu
         /// </summary>
         public List<Vector2> SurroundingTilesPositions
         {
-            get
+            get { return _surroundingTilesPositions; }
+        }
+
+        public List<Vector2> EnclosedTilesPositions
+        {
+            get { return _enclosedTilesPositions; }
+        }
+
+        public static CageType ReadFromFile(string path)
+        {
+            var file = new StreamReader(path);
+            var cageType = new CageType();
+
+            cageType._maxAttractivity = ReadInt(file);
+            cageType.ReadLayout(file);
+
+            return cageType;
+        }
+
+        static int ReadInt(StreamReader stream)
+        {
+            string line;
+            do
             {
-                // TODO
-                return new List<Vector2>();
+                line = stream.ReadLine();
+            } while (string.IsNullOrWhiteSpace(line) || '#' == line[0]);
+
+            return Convert.ToInt32(line);
+        }
+
+        void ReadLayout(StreamReader stream)
+        {
+            int layoutWidth = ReadInt(stream);
+            int layoutHeight = ReadInt(stream);
+
+            bool[] verticalInCage = new bool[layoutWidth];
+            for (int x = 0; layoutWidth > x; ++x)
+                verticalInCage[x] = false;
+
+            // Read all lines of the layout
+            string[] lines = new string[layoutHeight];
+            for (int y = 0; layoutHeight > y; ++y)
+            {
+                lines[y] = stream.ReadLine();
+
+                if (lines[y].Length > layoutWidth)
+                    throw new ParseError(y, "Line too long");
+            }
+
+            // Go through them line after line
+            for (int y = 0; layoutHeight > y; ++y)
+            {
+                bool horizontalInCage = false;
+
+                // ... and character after character
+                for (int x = 0; Math.Min(lines[y].Length, layoutWidth) > x; ++x)
+                {
+                    switch (lines[y][x])
+                    {
+                        case ' ':
+                            if (horizontalInCage && verticalInCage[x])
+                                _enclosedTilesPositions.Add(new Vector2(x, y));
+                            break;
+
+                        case '#':
+                            _wallPositions.Add(new Vector2(x, y));
+
+                            if (horizontalInCage && (((lines[y].Length - 1) == x) || (x < lines[y].Length && '#' != lines[y][x + 1])))
+                            {
+                                _surroundingTilesPositions.Add(new Vector2(x + 1, y));
+                                horizontalInCage = false;
+                            }
+                            else if (!horizontalInCage && (0 == x || (x < lines[y].Length && '#' != lines[y][x - 1])))
+                            {
+                                _surroundingTilesPositions.Add(new Vector2(x - 1, y));
+                                horizontalInCage = true;
+                            }
+
+                            if (verticalInCage[x] && ((layoutHeight - 1) == y || (x < lines[y + 1].Length && '#' != lines[y + 1][x])))
+                            {
+                                _surroundingTilesPositions.Add(new Vector2(x, y + 1));
+                                verticalInCage[x] = false;
+                            }
+                            else if (!verticalInCage[x] && (0 == y || (x < lines[y - 1].Length && '#' != lines[y - 1][x])))
+                            {
+                                _surroundingTilesPositions.Add(new Vector2(x, y - 1));
+                                verticalInCage[x] = true;
+                            }
+
+                            break;
+
+                        default:
+                            throw new ParseError(y, "Unexpected character '" + lines[y][x] + "'");
+                    }
+                }
+
+                if (horizontalInCage)
+                    throw new ParseError(y, "Missing closing cage wall");
             }
         }
     }

@@ -24,5 +24,10 @@ namespace Jantu
             Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
             Console.Write(_drawChar);
         }
+
+        protected override bool OnBlockingQuery()
+        {
+            return true;
+        }
     }
 }

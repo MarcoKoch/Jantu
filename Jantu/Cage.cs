@@ -33,11 +33,16 @@ namespace Jantu
             }
         }
         public int PooCount;
-        public int SpeciesCount;
+        public int SpeciesCount = 0;
         private CageType _type;
         private Balancing _balance;
-        private List<Tile> _tiles;
         private bool Preview;
+        private List<Tile> _surroundingTiles = new List<Tile>();
+        private List<Tile> _enclosedTiles = new List<Tile>();
+        private World _world;
+        private Game _game;
+        private Random _random;
+
         public List<CageWallEntity> Walls
         {
             get
@@ -46,12 +51,65 @@ namespace Jantu
             }
         }
 
-        private Game _game;
+        public List<Tile> EnclosedTiles
+        {
+            get { return _enclosedTiles; }
+        }
+
+        public List<Tile> SurroundingTiles
+        {
+            get { return _surroundingTiles; }
+        }
 
         List<PooEntity> _pooList = new List<PooEntity>();
         List<AnimalEntity> _animalList = new List<AnimalEntity>();
         List<Species> _speciesList = new List<Species>();
         List<CageWallEntity> _walls = new List<CageWallEntity>();
+        List<VisitorEntity> _visitorList = new List<VisitorEntity>();
+
+        private int _numCurrentPeeps;
+
+
+        public void Update()
+        {
+            if (_numCurrentPeeps < NumPeeps)
+                CreateNewVisitor();
+            else if (_numCurrentPeeps > NumPeeps)
+                RemoveVisitor();
+        }
+
+        private void CreateNewVisitor()
+        {
+            VisitorEntity newVisitor = new VisitorEntity();
+            _visitorList.Add(newVisitor);
+
+            List<Tile> freeTiles = new List<Tile>();
+            foreach (Tile t in SurroundingTiles)
+            {
+                if (t.Entity != null)
+                {
+                    freeTiles.Add(t);
+                }
+            }
+
+            int index = _random.Next(freeTiles.Count);
+            Tile targetTile = freeTiles[index];
+            targetTile.Entity = newVisitor;
+         }
+
+        private void RemoveVisitor()
+        {
+            if (_visitorList.Count != 0)
+            {
+
+                int index = _random.Next(_visitorList.Count);
+                VisitorEntity visitor = _visitorList[index];
+
+                _visitorList.Remove(visitor);
+
+                visitor.Tile = null;
+            }
+        }
 
         public Cage(CageType type, Vector2 pos, Game game, Balancing balance, bool preview)
         {
@@ -60,27 +118,33 @@ namespace Jantu
             Preview = preview;
             _game = game;
             _balance = balance;
-            World world = game.World;
+            _world = game.World;
 
             for (int i = 0; i < wallpositions.Count; i++)
             {
                 CageWallEntity wall = new CageWallEntity(this);
                 Vector2 wallpos = pos + wallpositions[i];
-                Tile tile = world[wallpos];
+                Tile tile = _world[wallpos];
                 tile.Entity = wall;
                 _walls.Add(wall);
             }
+
+            RecomputeEnclosedTiles(pos);
+            RecomputeSurroundingTiles(pos);
+
+            foreach (var tile in EnclosedTiles)
+                tile.Cage = this;
         }
 
-        public void addAnimal(AnimalEntity animal)
+        public void AddAnimal(AnimalEntity animal)
         {
             _animalList.Add(animal);
 
-            for(int i = 0; i <= _speciesList.Count; i++)
+            for(int i = 0; i < _speciesList.Count; i++)
             {
                Species animalX = _speciesList[i];
 
-               if (animalX == animal.Species)
+               if (Object.ReferenceEquals(animalX, animal.Species))
                {
                    continue;
                }
@@ -91,29 +155,29 @@ namespace Jantu
             }
         }
 
-        public void removeAnimal(AnimalEntity animal)
+        public void RemoveAnimal(AnimalEntity animal)
         {
             Species animalX = animal.Species;
-            for(int i = 0; i <= _animalList.Count; i++)
+            for(int i = 0; i < _animalList.Count; i++)
             {
                 if (animal == _animalList[i])
                 {
                     _animalList.RemoveAt(i);
                     break; 
                 }
-            }  
-            for (int i = 0; i <= _animalList.Count; i++)
+            }
+
+            bool speciesOrphaned = false;
+            for (int i = 0; i < _speciesList.Count; i++)
             {
-                if (animalX == _speciesList[i])
+                if (Object.ReferenceEquals(animalX, _speciesList[i]))
                 {
-                    continue;
-                }
-                else if (i == _animalList.Count)
-                {
-                    _speciesList.Remove(animalX);
+                    speciesOrphaned = true;
                     break;
                 }
            }
+            if (speciesOrphaned)
+                _speciesList.Remove(animalX);
         }
         public void AddPoo(PooEntity poo)
         {
@@ -121,15 +185,37 @@ namespace Jantu
             _pooList.Add(poo);
         }
 
+        public void RemovePoo(PooEntity poo)
+        {
+            --PooCount;
+            _pooList.Remove(poo);
+        }
+
         public void Clean ()
         {
-            for (int i = 0; i < _pooList.Count; i++)
-            {
-                PooEntity poo = _pooList[i];
-                poo.Tile.Entity = null;
-            }
+            foreach (var poo in _pooList)
+                poo.Tile = null; // This calls RemovePoo() implicitly
+        }
 
-            _pooList.Clear();
+        void RecomputeSurroundingTiles(Vector2 pos)
+        {
+            var _surroundingVectors = _type.SurroundingTilesPositions;
+            _surroundingTiles.Clear();
+            for (int i = 0; i < _surroundingVectors.Count; i++)
+            {
+                Vector2 surroundpos = pos + _surroundingVectors[i];
+                _surroundingTiles.Add(_world[surroundpos]);
+            }
+        }
+        void RecomputeEnclosedTiles(Vector2 pos)
+        {
+            var _enclosedVectors = _type.EnclosedTilesPositions;
+            _enclosedTiles.Clear();
+            for (int i = 0; i < _enclosedVectors.Count; i++)
+            {
+                Vector2 closepos = pos + _enclosedVectors[i];
+                _enclosedTiles.Add(_world[closepos]);
+            }
         }
    }
 }

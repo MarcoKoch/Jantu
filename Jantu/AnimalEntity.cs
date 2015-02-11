@@ -8,8 +8,9 @@ namespace Jantu
     class AnimalEntity : Entity
     {
         Species _species;
-        uint    _hunger;
-        uint    _health;
+        int     _hunger;
+        int     _health;
+        double _timeSinceLastPoo;
 
         /// <summary>
         /// Gets the species.
@@ -28,7 +29,7 @@ namespace Jantu
         /// <value>
         /// The hunger.
         /// </value>
-        public uint Hunger
+        public int Hunger
         {
             get { return _hunger; }
             set { _hunger = value; }
@@ -40,7 +41,7 @@ namespace Jantu
         /// <value>
         /// The health.
         /// </value>
-        public uint Health
+        public int Health
         {
             get { return _health; }
             set
@@ -75,9 +76,6 @@ namespace Jantu
         /// <param name='allSpecies'>
         /// All species.
         /// </param>
-        /// <param name='rand'>
-        /// A random number generator to be used.
-        /// </param>
         /// <remarks>
         /// Breeding may fail if no either the two species can't breed with each other or there is no
         /// free tile beside the animal. If breeding succeeds, a new animal is created and placed at a random
@@ -86,14 +84,18 @@ namespace Jantu
         /// <returns>
         /// The newly created animal, if successful. <c>null</c> if breeding failed.
         /// </returns>
-        public AnimalEntity TryBreedWith(AnimalEntity other, SpeciesManager allSpecies, Random rand)
+        public AnimalEntity TryBreedWith(AnimalEntity other)
         {
             if (!Species.BreedsWith(other.Species))
                 return null;
             
-            Tile newAnimalTile = Tile.FindRandomEmptyNeighbour(rand);
+            Tile newAnimalTile = Tile.FindRandomEmptyNeighbour();
             if (null != newAnimalTile)
-                return new AnimalEntity(Species.BreedWith(other.Species, allSpecies, rand));
+            {
+                var child = new AnimalEntity(Species.BreedWith(other.Species, Tile.World.Game.Data.Species, Tile.World.Game.Random));
+                child.Tile = newAnimalTile;
+                return child;
+            }
 
             return null;
         }
@@ -136,25 +138,77 @@ namespace Jantu
         /// tile beside the animal. If successful, the poo is placed on
         /// a random neighbouring tile.
         /// </remarks>
-        public PooEntity TryPoo(Random rand)
+        public PooEntity TryPoo()
         {
-            Tile pooTile = Tile.FindRandomEmptyNeighbour(rand);
+            Tile pooTile = Tile.FindRandomEmptyNeighbour();
             if (null != pooTile)
             {
-                //pooTile.AddPooToCage();
-                return new PooEntity();
+                var poo = new PooEntity();
+                poo.Tile = pooTile;
+                return poo;
             }
 
             return null;
         }
 
-        /// <summary>
-        /// Draws the animal.
-        /// </summary>
+        public override void Update(double dt)
+        {
+            base.Update(dt);
+
+            // Is there some internal pressure?
+            _timeSinceLastPoo += dt;
+            if (_timeSinceLastPoo >= Species.PooPeriod)
+            {
+                if (TryPoo() != null)
+                    _timeSinceLastPoo = 0;
+            }
+        }
+
         public override void Draw()
         {
             Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
             Console.Write(_species.Symbol);
+        }
+
+        protected override bool OnBlockingQuery()
+        {
+            return true;
+        }
+
+        protected override bool OnCollision(Entity other)
+        {
+            // Can we breed with it?
+            var otherAnimal = other as AnimalEntity;
+            if (otherAnimal != null)
+            {
+                var child = TryBreedWith(otherAnimal);
+
+                // If we can't breed with it, let's eat it xD
+                if (child == null)
+                    Eat(otherAnimal);
+
+                return true;
+            }
+
+            // Is it edible?
+            var food = other as FoodEntity;
+            if (food != null)
+            {
+                Eat(food);
+                return true;
+            }
+
+            return false;
+        }
+
+        protected override void OnTileChanged(Tile oldTile)
+        {
+            base.OnTileChanged(oldTile);
+
+            if (oldTile != null && oldTile.Cage != null)
+                oldTile.Cage.RemoveAnimal(this);
+            if (Tile != null && Tile.Cage != null)
+                Tile.Cage.AddAnimal(this);
         }
     }
 }

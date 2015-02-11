@@ -22,6 +22,11 @@
             get { return OnNeedsRedrawQuery(); }
         }
 
+        public bool Blocking
+        {
+            get { return OnBlockingQuery();  }
+        }
+
         /// <summary>
         /// Gets or sets the tile.
         /// </summary>
@@ -31,7 +36,11 @@
         public Tile Tile
         {
             get { return _tile; }
-            set { value.Entity = this; }
+            set
+            {
+                if (value != null)
+                    value.Entity = this;
+            }
         }
 
         /// <summary>
@@ -57,18 +66,41 @@
         }
 
         /// <summary>
+        /// Sets the current tile of the entity.
+        /// </summary>
+        /// <remarks>
+        /// ATTENTION! This mothod is for internal use by <cref="Tile.Entity"> only. Do not call this method manually.
+        /// </remarks>
+        /// <param name="tile"></param>
+        public void SetTile(Tile tile)
+        {
+            var oldTile = _tile;
+            _tile = tile;
+            OnTileChanged(oldTile);
+        }
+
+        /// <summary>
+        /// Call this to trigger a collision with an other entity.
+        /// </summary>
+        /// <remarks>
+        /// This calls <see cref="Jantu.Entity.OnCollision"/> on both, this and other.
+        /// </remarks>
+        /// <param name="other">The other entitiy with which to collide</param>
+        public virtual void CollideWith(Entity other)
+        {
+            if (OnCollision(other))
+                other.OnCollision(this);
+        }
+
+        /// <summary>
         /// Called when the tile of the entity changed.
         /// </summary>
-        /// <param name='tile'>
-        /// New tile.
+        /// <param name='oldTile'>
+        /// The previous tile.
         /// </param>
-        /// <remarks>
-        /// This is for internal use by <see cref="Jantu.Tile"/>. Do not call this
-        /// method manually.
-        /// </remarks>
-        public void OnTileChanged(Tile tile)
+        protected virtual void OnTileChanged(Tile oldTile)
         {
-            _tile = tile;
+            return;
         }
 
         /// <summary>
@@ -78,6 +110,31 @@
         /// Derived classes may override this to signal when they need to be redrawn.
         /// </remarks>
         protected virtual bool OnNeedsRedrawQuery()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Called when <see cref="Jantu.Entity.Blocking"/> is queried.
+        /// </summary>
+        /// <remarks>
+        /// Derived classes may override this to block the path of moving entities.
+        /// The default implementation returns false.
+        /// </remarks>
+        protected virtual bool OnBlockingQuery()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Called if the entity collides with an other one.
+        /// </summary>
+        /// <param name="other">The other entity with which the collision occured</param>
+        /// <returns>
+        /// If true is returned, no other <cref="Jantu.Entity.OnCollision()"> handler is called
+        /// for this collision.
+        /// </returns>
+        protected virtual bool OnCollision(Entity other)
         {
             return false;
         }
