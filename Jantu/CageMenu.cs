@@ -24,7 +24,13 @@ namespace Jantu
             Console.Write("********** Gehege **********");
 
             Console.SetCursorPosition(Position.X + 1, Position.Y + 3);
-            Console.Write("Besucher \t" + (string)_Game.Visitors);
+            Console.Write("Besucher \t" + (string) _Game.ActiveCage.NumVisitors);
+
+            Console.SetCursorPosition(Position.X + 1, Position.Y + 4);
+            Console.Write("Kothaufen \t" + (string)_Game.ActiveCage.PooCount);
+
+            Console.SetCursorPosition(Position.X + 1, Position.Y + 6);
+            Console.Write("Nahrung \t")
         }
     }
 }

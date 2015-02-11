@@ -39,5 +39,17 @@ namespace Jantu
             Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
             Console.Write(_kind.Symbol);
         }
+
+        protected override void OnTileChanged(Tile oldTile)
+        {
+            if (oldTile != null && oldTile.Cage != null)
+            {
+                oldTile.Cage.RemoveFood(this);
+            }
+            if (Tile != null && Tile.Cage != null)
+            {
+                Tile.Cage.AddFood(this);
+            }
+        }
     }
 }

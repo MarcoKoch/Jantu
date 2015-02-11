@@ -32,8 +32,11 @@ namespace Jantu
 
             }
         }
-        public int PooCount;
-        public int SpeciesCount = 0;
+
+
+        private int _pooCount = 0;
+        private int _speciesCount = 0;
+        private int _foodCount = 0;
         private CageType _type;
         private Balancing _balance;
         private bool Preview;
@@ -42,6 +45,30 @@ namespace Jantu
         private World _world;
         private Game _game;
         private Random _random;
+
+        public int PooCount
+        {
+            get
+            {
+                return _pooCount;
+            }
+        }
+
+        public int SpeciesCount
+        {
+            get
+            {
+                return _speciesCount;
+            }
+        }
+
+        public int FoodCount
+        {
+            get
+            {
+                return _foodCount;
+            }
+        }
 
         public List<CageWallEntity> Walls
         {
@@ -189,6 +216,16 @@ namespace Jantu
         {
             --PooCount;
             _pooList.Remove(poo);
+        }
+
+        public void AddFood(FoodEntity food)
+        {
+            FoodCount++;
+        }
+
+        public void RemoveFood(FoodEntity food)
+        {
+            FoodCount--;
         }
 
         public void Clean ()
