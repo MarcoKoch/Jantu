@@ -52,11 +52,12 @@
     <Compile Include="PooEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Showbar.cs" />
+    <Compile Include="CageMenu.cs" />
     <Compile Include="Species.cs" />
     <Compile Include="SpeciesManager.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Vector2.cs" />
+    <Compile Include="Window.cs" />
     <Compile Include="World.cs" />
     <Compile Include="FoodKindManager.cs" />
     <Compile Include="DataManager.cs" />
