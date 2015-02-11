@@ -165,19 +165,19 @@ namespace Jantu
                     _animalList.RemoveAt(i);
                     break; 
                 }
-            }  
-            for (int i = 0; i < _animalList.Count; i++)
+            }
+
+            bool speciesOrphaned = false;
+            for (int i = 0; i < _speciesList.Count; i++)
             {
                 if (Object.ReferenceEquals(animalX, _speciesList[i]))
                 {
-                    continue;
-                }
-                else if (i == _animalList.Count)
-                {
-                    _speciesList.Remove(animalX);
+                    speciesOrphaned = true;
                     break;
                 }
            }
+            if (speciesOrphaned)
+                _speciesList.Remove(animalX);
         }
         public void AddPoo(PooEntity poo)
         {
