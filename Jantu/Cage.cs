@@ -46,6 +46,11 @@ namespace Jantu
             get { return _speciesList.Count; }
         }
 
+        public List<Species> Species
+        {
+            get { return _speciesList; }
+        }
+
         public int PooCount
         {
             get { return _pooList.Count; }
@@ -64,6 +69,18 @@ namespace Jantu
         public List<FoodEntity> Food
         {
             get { return _foodList; }
+        }
+
+        public List<FoodKind> FoodKinds
+        {
+            get
+            {
+                List<FoodKind> kinds = new List<FoodKind>;
+                foreach (var food in Food)
+                    if (!kinds.Contains(food.Kind))
+                        kinds.Add(food.Kind);
+                return kinds;
+            }
         }
 
         public List<CageWallEntity> Walls
