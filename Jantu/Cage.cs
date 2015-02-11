@@ -136,11 +136,11 @@ namespace Jantu
                 tile.Cage = this;
         }
 
-        public void addAnimal(AnimalEntity animal)
+        public void AddAnimal(AnimalEntity animal)
         {
             _animalList.Add(animal);
 
-            for(int i = 0; i <= _speciesList.Count; i++)
+            for(int i = 0; i < _speciesList.Count; i++)
             {
                Species animalX = _speciesList[i];
 
@@ -158,7 +158,7 @@ namespace Jantu
         public void RemoveAnimal(AnimalEntity animal)
         {
             Species animalX = animal.Species;
-            for(int i = 0; i <= _animalList.Count; i++)
+            for(int i = 0; i < _animalList.Count; i++)
             {
                 if (animal == _animalList[i])
                 {
@@ -166,7 +166,7 @@ namespace Jantu
                     break; 
                 }
             }  
-            for (int i = 0; i <= _animalList.Count; i++)
+            for (int i = 0; i < _animalList.Count; i++)
             {
                 if (animalX == _speciesList[i])
                 {

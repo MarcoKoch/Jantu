@@ -200,5 +200,15 @@ namespace Jantu
 
             return false;
         }
+
+        protected override void OnTileChanged(Tile oldTile)
+        {
+            base.OnTileChanged(oldTile);
+
+            if (oldTile != null && oldTile.Cage != null)
+                oldTile.Cage.RemoveAnimal(this);
+            if (Tile != null && Tile.Cage != null)
+                Tile.Cage.AddAnimal(this);
+        }
     }
 }
