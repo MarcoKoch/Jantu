@@ -32,6 +32,14 @@ namespace Jantu
 
             }
         }
+<<<<<<< HEAD
+
+
+        private int _pooCount = 0;
+        private int _speciesCount = 0;
+        private int _foodCount = 0;
+=======
+>>>>>>> origin/master
         private CageType _type;
         private Balancing _balance;
         private bool Preview;
@@ -41,23 +49,41 @@ namespace Jantu
         private Game _game;
         private Random _random;
 
+<<<<<<< HEAD
+        public int PooCount
+        {
+            get
+            {
+                return _pooCount;
+            }
+        }
+
+        public int SpeciesCount
+        {
+            get
+            {
+                return _speciesCount;
+            }
+=======
         public int SpeciesCount
         {
             get { return _speciesList.Count; }
         }
 
-        public List<Species> Species
-        {
-            get { return _speciesList; }
-        }
-
         public int PooCount
         {
             get { return _pooList.Count; }
+>>>>>>> origin/master
         }
 
         public int FoodCount
         {
+<<<<<<< HEAD
+            get
+            {
+                return _foodCount;
+            }
+=======
             get { return _foodList.Count; }
         }
 
@@ -69,18 +95,7 @@ namespace Jantu
         public List<FoodEntity> Food
         {
             get { return _foodList; }
-        }
-
-        public List<FoodKind> FoodKinds
-        {
-            get
-            {
-                List<FoodKind> kinds = new List<FoodKind>();
-                foreach (var food in Food)
-                    if (!kinds.Contains(food.Kind))
-                        kinds.Add(food.Kind);
-                return kinds;
-            }
+>>>>>>> origin/master
         }
 
         public List<CageWallEntity> Walls
@@ -243,12 +258,20 @@ namespace Jantu
 
         public void AddFood(FoodEntity food)
         {
+<<<<<<< HEAD
+            FoodCount++;
+=======
             _foodList.Add(food);
+>>>>>>> origin/master
         }
 
         public void RemoveFood(FoodEntity food)
         {
+<<<<<<< HEAD
+            FoodCount--;
+=======
             _foodList.Remove(food);
+>>>>>>> origin/master
         }
 
         public void Clean ()

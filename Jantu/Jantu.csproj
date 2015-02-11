@@ -54,7 +54,6 @@
     <Compile Include="PooEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CageMenu.cs" />
     <Compile Include="Species.cs" />
     <Compile Include="SpeciesManager.cs" />
     <Compile Include="Tile.cs" />

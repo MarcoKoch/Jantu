@@ -24,13 +24,50 @@ namespace Jantu
             Console.Write("********** Gehege **********");
 
             Console.SetCursorPosition(Position.X + 1, Position.Y + 3);
-            Console.Write("Besucher \t" + (string) _Game.ActiveCage.NumVisitors);
+            Console.Write("Besucher \t" + _Game.ActiveCage.NumPeeps);
 
             Console.SetCursorPosition(Position.X + 1, Position.Y + 4);
-            Console.Write("Kothaufen \t" + (string)_Game.ActiveCage.PooCount);
+            Console.Write("Kothaufen \t" + _Game.ActiveCage.PooCount);
 
             Console.SetCursorPosition(Position.X + 1, Position.Y + 6);
-            Console.Write("Nahrung \t")
+            Console.Write("Tiere \t");
+
+
+            int y = Position.Y + 7;
+
+            foreach(Species species in _Game.ActiveCage.Species)
+            {
+               
+                Console.SetCursorPosition(Position.X + 3, y);
+                Console.Write( species.Name + " \t " + CountAnimals(species));
+                y++;
+
+            }
+
+            y += 1;
+
+            Console.SetCursorPosition(Position.X + 1, y++);
+            Console.Write("Nahrung \t");
+
+            foreach(FoodKind food in _Game.ActiveCage.FoodKinds)
+            {
+               
+                Console.SetCursorPosition(Position.X + 3, y);
+                Console.Write( food.Name + " \t " + CountFood(food));
+                y++;
+
+            }
+
+        }
+
+        private int CountAnimals(Species species)
+        {
+
+        }
+
+        private int CountFood(FoodKind food)
+        {
+
         }
     }
 }
