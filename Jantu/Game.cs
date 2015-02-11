@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Jantu
 {
@@ -24,6 +25,11 @@ namespace Jantu
         /// throughout the game.
         /// </remarks>
         public readonly Random Random;
+
+        /// <summary>
+        ///  List of all cages in the game.
+        /// </summary>
+        public List<Cage> Cages;
 
         public DataManager Data
         {
@@ -60,8 +66,6 @@ namespace Jantu
             get { return _visitors; }
             set { _visitors = value; }
         }
-
-
 
         public Game(int worldWidth, int worldHeight, Vector2 worldOrigin)
         {

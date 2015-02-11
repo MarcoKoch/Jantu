@@ -32,11 +32,6 @@ namespace Jantu
 
             }
         }
-
-
-        private int _pooCount = 0;
-        private int _speciesCount = 0;
-        private int _foodCount = 0;
         private CageType _type;
         private Balancing _balance;
         private bool Preview;
@@ -46,28 +41,29 @@ namespace Jantu
         private Game _game;
         private Random _random;
 
-        public int PooCount
-        {
-            get
-            {
-                return _pooCount;
-            }
-        }
-
         public int SpeciesCount
         {
-            get
-            {
-                return _speciesCount;
-            }
+            get { return _speciesList.Count; }
+        }
+
+        public int PooCount
+        {
+            get { return _pooList.Count; }
         }
 
         public int FoodCount
         {
-            get
-            {
-                return _foodCount;
-            }
+            get { return _foodList.Count; }
+        }
+
+        public List<AnimalEntity> Animals
+        {
+            get { return _animalList; }
+        }
+
+        public List<FoodEntity> Food
+        {
+            get { return _foodList; }
         }
 
         public List<CageWallEntity> Walls
@@ -88,13 +84,24 @@ namespace Jantu
             get { return _surroundingTiles; }
         }
 
-        List<PooEntity> _pooList = new List<PooEntity>();
-        List<AnimalEntity> _animalList = new List<AnimalEntity>();
-        List<Species> _speciesList = new List<Species>();
-        List<CageWallEntity> _walls = new List<CageWallEntity>();
-        List<VisitorEntity> _visitorList = new List<VisitorEntity>();
+        List<PooEntity> _pooList;
+        List<FoodEntity> _foodList;
+        List<AnimalEntity> _animalList;
+        List<Species> _speciesList;
+        List<CageWallEntity> _walls;
+        List<VisitorEntity> _visitorList;
 
         private int _numCurrentPeeps;
+
+        public Cage()
+        {
+            _pooList = new List<PooEntity>();
+            _foodList = new List<FoodEntity>();
+            _animalList = new List<AnimalEntity>();
+            _speciesList = new List<Species>();
+            _walls = new List<CageWallEntity>();
+            _visitorList = new List<VisitorEntity>();
+        }
 
 
         public void Update()
@@ -206,26 +213,25 @@ namespace Jantu
             if (speciesOrphaned)
                 _speciesList.Remove(animalX);
         }
+
         public void AddPoo(PooEntity poo)
         {
-            PooCount++;
             _pooList.Add(poo);
         }
 
         public void RemovePoo(PooEntity poo)
         {
-            --PooCount;
             _pooList.Remove(poo);
         }
 
         public void AddFood(FoodEntity food)
         {
-            FoodCount++;
+            _foodList.Add(food);
         }
 
         public void RemoveFood(FoodEntity food)
         {
-            FoodCount--;
+            _foodList.Remove(food);
         }
 
         public void Clean ()
