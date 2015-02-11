@@ -144,7 +144,7 @@ namespace Jantu
             {
                Species animalX = _speciesList[i];
 
-               if (animalX == animal.Species)
+               if (Object.ReferenceEquals(animalX, animal.Species))
                {
                    continue;
                }
@@ -168,7 +168,7 @@ namespace Jantu
             }  
             for (int i = 0; i < _animalList.Count; i++)
             {
-                if (animalX == _speciesList[i])
+                if (Object.ReferenceEquals(animalX, _speciesList[i]))
                 {
                     continue;
                 }
