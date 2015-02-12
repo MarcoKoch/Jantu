@@ -75,7 +75,7 @@ namespace Jantu
         {
             get
             {
-                List<FoodKind> kinds = new List<FoodKind>;
+                List<FoodKind> kinds = new List<FoodKind>();
                 foreach (var food in Food)
                     if (!kinds.Contains(food.Kind))
                         kinds.Add(food.Kind);
@@ -170,6 +170,13 @@ namespace Jantu
             _game = game;
             _balance = balance;
             _world = game.World;
+    
+            _pooList = new List<PooEntity>();
+            _foodList = new List<FoodEntity>();
+            _animalList = new List<AnimalEntity>();
+            _speciesList = new List<Species>();
+            _walls = new List<CageWallEntity>();
+            _visitorList = new List<VisitorEntity>();
 
             for (int i = 0; i < wallpositions.Count; i++)
             {
