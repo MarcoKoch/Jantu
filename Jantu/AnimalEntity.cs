@@ -5,7 +5,7 @@ namespace Jantu
     /// <summary>
     /// Represents an animal in the game world.
     /// </summary>
-    class AnimalEntity : Entity
+    class AnimalEntity : MovingEntity
     {
         Species _species;
         int     _hunger;

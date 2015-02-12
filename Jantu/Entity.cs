@@ -88,7 +88,7 @@
         /// <param name="other">The other entitiy with which to collide</param>
         public virtual void CollideWith(Entity other)
         {
-            if (OnCollision(other))
+            if(OnCollision(other))
                 other.OnCollision(this);
         }
 

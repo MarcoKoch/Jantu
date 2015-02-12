@@ -51,12 +51,15 @@
     <Compile Include="FoodKind.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="InfoBar.cs" />
+    <Compile Include="MovingEntity.cs" />
     <Compile Include="PooEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Showbar.cs" />
+    <Compile Include="SpatialAStar.cs" />
     <Compile Include="Species.cs" />
     <Compile Include="SpeciesManager.cs" />
+    <Compile Include="SpeciesType.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="VisitorEntity.cs" />

@@ -72,5 +72,6 @@ namespace Jantu
             _world = new World(this, worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
         }
+
     }
 }
