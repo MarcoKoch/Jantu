@@ -27,7 +27,7 @@ namespace Jantu
 
             // Test code
 
-            var cageType = CageType.ReadFromFile("../../../data/cages/square.cage");
+            var cageType = CageType.ReadFromFile("../../../data/cages/cross.cage");
 
             var species = new Species("Cow");
             species.Symbol = 'c';
