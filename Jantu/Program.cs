@@ -63,7 +63,7 @@ namespace Jantu
                 if (timeSinceLastMenuUpdate >= menuUpdateInterval)
                 {
                     menu.Draw();
-                    //menu2.Draw();
+                    menu2.Draw();
                     menu3.Draw();
                     timeSinceLastMenuUpdate = 0;
                 }
