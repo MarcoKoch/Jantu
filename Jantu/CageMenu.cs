@@ -16,7 +16,7 @@ namespace Jantu
             _Game = game;
         }
 
-        public override void Draw()
+        protected override void OnDraw()
         {
             base.Draw();
 

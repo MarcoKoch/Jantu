@@ -10,12 +10,15 @@ namespace Jantu
 
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Game game = new Game(Console.WindowWidth - 20, Console.WindowHeight-3,  new Vector2(0,3));
-            CageMenu menu = new CageMenu(new Vector2(Console.WindowWidth - 22, 3), 22, 15, game);
-            InfoBar menu2 = new InfoBar(game,Console.WindowWidth-22,3);
-            Stopwatch watch = new Stopwatch();
-            KeyPressManager key = new KeyPressManager(Console.WindowWidth - 20, Console.WindowHeight-3, game);
+            Console.WindowWidth = 100;
+            Console.WindowHeight = 60;
+            
+            var game = new Game(Console.WindowWidth - 22, Console.WindowHeight-3,  new Vector2(0,3));
+            var menu = new ActionMenu(new Vector2(Console.WindowWidth - 22, 0), 22, 18);
+            var menu2 = new InfoBar(game,Console.WindowWidth-22,3);
+            var menu3 = new CageMenu(new Vector2(Console.WindowWidth - 22, 18), 22, Console.WindowHeight - 13, game);
+            var watch = new Stopwatch();
+            var key = new KeyPressManager(Console.WindowWidth - 20, Console.WindowHeight-3, game);
 
             // Test code
 
@@ -39,7 +42,7 @@ namespace Jantu
 
             watch.Start();
             menu.Draw();
-            //menu2.Draw(); // BUG: Die Menüleiste zeichnet über die Spielwelt
+            menu2.Draw();
             while (true)
             {
                 double dt = 0.001 * (double) watch.ElapsedMilliseconds;
