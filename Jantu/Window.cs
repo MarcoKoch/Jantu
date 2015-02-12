@@ -76,8 +76,7 @@ namespace Jantu
 
         private void RedrawBorder()
         {
-            Console.BackgroundColor = BackgroundColor;
-            Console.ForegroundColor = BorderColor;
+            Console.BackgroundColor = BorderColor;
 
             // Obere Horizontale
 
