@@ -10,6 +10,7 @@ namespace Jantu
 
         private int mode = 0;
         private CursorManager cursorman;
+        private Game _game;
 
 
 
@@ -17,9 +18,10 @@ namespace Jantu
         /// w and h are set by the constructor which determines how large the world is and are necessary
         /// for the Cursormanager to work properly
         /// </summary>
-        public KeyPressManager(int wi, int he)
+        public KeyPressManager(int wi, int he, Game game)
         {
             cursorman = new CursorManager(wi, he);
+            _game = game;
         }
 
 
@@ -42,12 +44,12 @@ namespace Jantu
 
             else if (ConsoleKey.G.Equals(entry))
             {
-                if (mode != SpeciesManager.BasicSpecies.count() + 1)
+                if (mode != _game.Data.Species.BasicSpecies.Count() + 1)
                 {
                     BuildCage();
                 }
 
-                else if (mode == SpeciesManager.BasicSpecies.count() + 1)
+                else if (mode == _game.Data.Species.BasicSpecies.Count() + 1)
                 {
                     BuildCageNext();
                 }
@@ -55,19 +57,19 @@ namespace Jantu
 
             else if (ConsoleKey.T.Equals(entry))
             {
-                if (mode == SpeciesManager.BasicSpecies.count())
+                if (mode == _game.Data.Species.BasicSpecies.Count)
                 {
                     mode = 1;
                     BuyAnimal();
                 }
 
-                else if (mode > 0 && mode < SpeciesManager.BasicSpecies.count())
+                else if (mode > 0 && mode < _game.Data.Species.BasicSpecies.Count())
                 {
                     mode++;
                     BuyAnimalNext();
                 }
 
-                else if (mode == 0 || mode >= SpeciesManager.BasicSpecies.count())
+                else if (mode == 0 || mode >= _game.Data.Species.BasicSpecies.Count())
                 {
                     mode = 1;
                     BuyAnimal();
@@ -76,13 +78,13 @@ namespace Jantu
 
             else if (ConsoleKey.L.Equals(entry))
             {
-                if (mode <= 100 && mode >= FoodKindManager.FoodKinds.count() + 100)
+                if (mode <= 100 && mode >= _game.Data.FoodKinds.FoodKinds.Count + 100)
                 {
                     mode = 100;
                     BuyFood();
                 }
 
-                else if (mode >= 100 && mode <= FoodKindManager.FoodKinds.count() + 100)
+                else if (mode >= 100 && mode <= _game.Data.FoodKinds.FoodKinds.Count + 100)
                 {
                     mode++;
                     BuyFoodNext();
@@ -132,7 +134,7 @@ namespace Jantu
 
         public void BuildCage()
         {
-            mode = SpeciesManager.BasicSpecies.count() + 1;
+            mode = _game.Data.Species.BasicSpecies.Count + 1;
             //Offer Cage Type 1
         }
 

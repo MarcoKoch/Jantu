@@ -11,11 +11,11 @@ namespace Jantu
         static void Main(string[] args)
         {
             Console.BackgroundColor = ConsoleColor.White;
-            CageMenu menu = new CageMenu();
             Game game = new Game(Console.WindowWidth - 20, Console.WindowHeight-3,  new Vector2(0,3));
+            CageMenu menu = new CageMenu(new Vector2(Console.WindowWidth - 22, 3), 22, 15, game);
             InfoBar menu2 = new InfoBar(game,Console.WindowWidth-22,3);
             Stopwatch watch = new Stopwatch();
-            KeyPressManager key = new KeyPressManager(Console.WindowWidth - 20, Console.WindowHeight-3);
+            KeyPressManager key = new KeyPressManager(Console.WindowWidth - 20, Console.WindowHeight-3, game);
 
             // Test code
 
