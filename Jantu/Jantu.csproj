@@ -46,12 +46,14 @@
     <Compile Include="Cage.cs" />
     <Compile Include="CageType.cs" />
     <Compile Include="CageWallEntity.cs" />
+    <Compile Include="CursorManager.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="FoodEntity.cs" />
     <Compile Include="FoodKind.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="InfoBar.cs" />
     <Compile Include="MovingEntity.cs" />
+    <Compile Include="KeyPressManager.cs" />
     <Compile Include="PooEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
