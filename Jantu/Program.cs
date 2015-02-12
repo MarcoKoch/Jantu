@@ -26,14 +26,13 @@ namespace Jantu
             // Test code
 
             var balance = new Balancing();
-            var a = CageType.ReadFromFile("../../../data/cages/4x4.cage");
-            var b = CageType.ReadFromFile("../../../data/cages/4x16.cage");
+            var cageType = CageType.ReadFromFile("../../../data/cages/square.cage");
 
             var species = new Species("Cow");
             species.Symbol = 'c';
-            species.PooPeriod = 1;
+            species.PooPeriod = 12;
 
-            var cage = new Cage(b, new Vector2(3,3), game, balance, false);
+            var cage = new Cage(cageType, new Vector2(3, 3), game, balance, false);
             game.ActiveCage = cage;
 
             var cow1 = new AnimalEntity(species);
