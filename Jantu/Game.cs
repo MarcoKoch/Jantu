@@ -6,16 +6,15 @@ namespace Jantu
     class Game
     {
         int _startCash = 1000000;
-        int _startDay = 0;
-        int _startAnimals = 0;
-        int _startVisitors = 0;
+        //int _startDay = 0;
+        //int _startAnimals = 0;
+        //int _startVisitors = 0;
 
+        private CageManager _cages;
         private DataManager _data;
         private World _world;
         private int _cash;
         private int _day;
-        private int _animals;
-        private int _visitors;
 
         /// <summary>
         /// A random number generator that can be used throughout the game.
@@ -26,10 +25,10 @@ namespace Jantu
         /// </remarks>
         public readonly Random Random;
 
-        /// <summary>
-        ///  List of all cages in the game.
-        /// </summary>
-        public List<Cage> Cages;
+        public CageManager Cages
+        {
+            get { return _cages; }
+        }
 
         public DataManager Data
         {
@@ -55,26 +54,35 @@ namespace Jantu
 
         public Cage ActiveCage;
 
-        public int Animals
+        public int NumAnimals
         {
-            get { return _animals; }
-            set { _animals = value; }
+            get
+            {
+                int num = 0;
+                foreach (var c in Cages.Cages)
+                    num += c.Animals.Count;
+                return num;
+            }
         }
 
         public int Visitors
         {
-            get { return _visitors; }
-            set { _visitors = value; }
+            get
+            {
+                int num = 0;
+                foreach (var c in Cages.Cages)
+                    num += c.NumPeeps;
+                return num;
+            }
         }
 
         public Game(int worldWidth, int worldHeight, Vector2 worldOrigin)
         {
             Random = new Random();
-            Cages = new List<Cage>();
+            _cages = new CageManager();
             _data = new DataManager();
             _world = new World(this, worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
         }
-
     }
 }
