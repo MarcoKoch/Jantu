@@ -62,7 +62,7 @@ namespace Jantu
                 _moves[7] = new Vector2(Tile.X, Tile.Y - 1);
 
 
-                _time += 0.05f;
+                _time += dt;
 
                 if (_time >= MovingSpeed)
                 {
