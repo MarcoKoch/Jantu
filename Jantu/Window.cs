@@ -44,6 +44,7 @@ namespace Jantu
         public int Width { get { return _Width; } }
         public int Height { get { return _Height; } }
         public Vector2 Position { get { return _Position; } }
+
         public Window(Vector2 position, int width, int height)
         {
             _Position = position;

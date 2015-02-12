@@ -18,8 +18,6 @@ namespace Jantu
 
         protected override void OnDraw()
         {
-            base.Draw();
-
             Console.SetCursorPosition(Position.X + 1, Position.Y + 1);
             Console.Write("**** Gehege ****");
             if (_Game.ActiveCage != null)

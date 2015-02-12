@@ -11,8 +11,8 @@ namespace Jantu
     {
         private Game _game;
 
-        public InfoBar(Game game, int width, int height) :
-            base(new Vector2(0,0), width, height)
+        public InfoBar(Game game, Vector2 pos, int width, int height) :
+            base(pos, width, height)
         {
             BackgroundColor = ConsoleColor.DarkGray;
             BorderColor = ConsoleColor.Gray;
@@ -22,7 +22,8 @@ namespace Jantu
 
          protected override void OnDraw()
          {
-             base.Draw();
+             Console.SetCursorPosition(Position.X + 1, Position.Y + 1);
+             Console.Write("Cash: " + _game.Cash);
 
             Console.SetCursorPosition(Position.X + 1, Position.Y + 1);
             for (int x = 1; x < Width+1; x++)
