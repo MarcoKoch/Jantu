@@ -13,7 +13,7 @@ namespace Jantu
             {
                 int attract = 0;
 
-                for (int i = 0; i <= _speciesList.Count; i++)
+                for (int i = 0; i < _speciesList.Count; i++)
                 {
                     Species animalX = _speciesList[i];
                     SpeciesManager Manager = new SpeciesManager();

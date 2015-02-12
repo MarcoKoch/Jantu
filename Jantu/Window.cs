@@ -52,8 +52,6 @@ namespace Jantu
             }
         }
 
-        public ConsoleColor TextColor;
-
         private Vector2 _Position;
         private int _Height;
         private char _Border;
@@ -94,7 +92,7 @@ namespace Jantu
                 Clear();
 
             Console.BackgroundColor = BackgroundColor;
-            Console.ForegroundColor = TextColor;
+            Console.ForegroundColor = ForegroundColor;
             OnDraw();
         }
 
@@ -136,7 +134,7 @@ namespace Jantu
             _needBorderRedraw = false;
         }
 
-        private void Clear()
+        public void Clear()
         {
             Console.BackgroundColor = BackgroundColor;
             for (int y = _Position.Y + 1; _Position.Y + Height - 1 > y; ++y)

@@ -13,11 +13,15 @@ namespace Jantu
         public CageMenu (Vector2 position, int width, int height, Game game) : 
             base (position, width, height)
         {
+            BackgroundColor = ConsoleColor.DarkCyan;
+            ForegroundColor = ConsoleColor.Gray;
             _Game = game;
         }
 
         protected override void OnDraw()
         {
+            Clear();
+
             Console.SetCursorPosition(Position.X + 1, Position.Y + 1);
             Console.Write("**** Gehege ****");
             if (_Game.ActiveCage != null)
@@ -38,7 +42,7 @@ namespace Jantu
                 {
 
                     Console.SetCursorPosition(Position.X + 3, y);
-                    Console.Write(species.Name + " \t " + CountAnimals(species));
+                    Console.Write("    " + species.Name + " \t " + CountAnimals(species));
                     y++;
 
                 }
@@ -52,7 +56,7 @@ namespace Jantu
                 {
 
                     Console.SetCursorPosition(Position.X + 3, y);
-                    Console.Write(food.Name + " \t " + CountFood(food));
+                    Console.Write("    " + food.Name + " \t " + CountFood(food));
                     y++;
 
                 }

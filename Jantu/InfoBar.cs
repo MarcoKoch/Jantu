@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -22,6 +23,8 @@ namespace Jantu
 
          protected override void OnDraw()
          {
+             Clear();
+
              Console.SetCursorPosition(Position.X + 1, Position.Y + 1);
              Console.Write("Cash: " + _game.Cash
                  + "\tDay: " + _game.Day

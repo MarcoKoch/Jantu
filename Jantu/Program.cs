@@ -16,9 +16,12 @@ namespace Jantu
             var game = new Game(Console.WindowWidth - 22, Console.WindowHeight-3,  new Vector2(0,3));
             var menu = new ActionMenu(new Vector2(Console.WindowWidth - 22, 0), 22, 18);
             var menu2 = new InfoBar(game, new Vector2(0,0),  Console.WindowWidth-22, 3);
-            var menu3 = new CageMenu(new Vector2(Console.WindowWidth - 22, 18), 22, Console.WindowHeight - 13, game);
+            var menu3 = new CageMenu(new Vector2(Console.WindowWidth - 22, 18), 22, Console.WindowHeight - 18, game);
             var watch = new Stopwatch();
             var key = new KeyPressManager(Console.WindowWidth - 20, Console.WindowHeight-3, game);
+
+            double menuUpdateInterval = 5;
+            double timeSinceLastMenuUpdate = menuUpdateInterval;
 
             // Test code
 
@@ -31,6 +34,7 @@ namespace Jantu
             species.PooPeriod = 1;
 
             var cage = new Cage(a, new Vector2(3,3), game, balance, false);
+            game.ActiveCage = cage;
 
             var cow1 = new AnimalEntity(species);
             var cow2 = new AnimalEntity(species);
@@ -41,9 +45,6 @@ namespace Jantu
             // End of test code
 
             watch.Start();
-            menu.Draw();
-            menu2.Draw();
-            menu3.Draw();
 
             while (true)
             {
@@ -54,9 +55,18 @@ namespace Jantu
                 ///<summary>
                 ///key input handling
                 ///</summary>
-                key.KeyInput();
+                //key.KeyInput();
 
                 game.World.Draw();
+
+                timeSinceLastMenuUpdate += dt;
+                if (timeSinceLastMenuUpdate >= menuUpdateInterval)
+                {
+                    menu.Draw();
+                    //menu2.Draw();
+                    menu3.Draw();
+                    timeSinceLastMenuUpdate = 0;
+                }
 
                 // This is to avoid an 'empty' line at the bottom of the screen
                 Console.SetCursorPosition(0,0);
