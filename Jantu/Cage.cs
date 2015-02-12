@@ -110,17 +110,6 @@ namespace Jantu
 
         private int _numCurrentPeeps;
 
-        public Cage()
-        {
-            _pooList = new List<PooEntity>();
-            _foodList = new List<FoodEntity>();
-            _animalList = new List<AnimalEntity>();
-            _speciesList = new List<Species>();
-            _walls = new List<CageWallEntity>();
-            _visitorList = new List<VisitorEntity>();
-        }
-
-
         public void Update()
         {
             if (_numCurrentPeeps < NumPeeps)
@@ -170,6 +159,8 @@ namespace Jantu
             _game = game;
             _balance = balance;
             _world = game.World;
+
+            _game.Cages.Add(this);
     
             _pooList = new List<PooEntity>();
             _foodList = new List<FoodEntity>();
@@ -192,6 +183,11 @@ namespace Jantu
 
             foreach (var tile in EnclosedTiles)
                 tile.Cage = this;
+        }
+
+        ~Cage()
+        {
+            _game.Cages.Remove(this);
         }
 
         public void AddAnimal(AnimalEntity animal)

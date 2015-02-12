@@ -33,7 +33,7 @@ namespace Jantu
             species.Symbol = 'c';
             species.PooPeriod = 1;
 
-            var cage = new Cage(a, new Vector2(3,3), game, balance, false);
+            var cage = new Cage(b, new Vector2(3,3), game, balance, false);
             game.ActiveCage = cage;
 
             var cow1 = new AnimalEntity(species);

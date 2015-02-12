@@ -70,6 +70,7 @@ namespace Jantu
         public Game(int worldWidth, int worldHeight, Vector2 worldOrigin)
         {
             Random = new Random();
+            Cages = new List<Cage>();
             _data = new DataManager();
             _world = new World(this, worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
