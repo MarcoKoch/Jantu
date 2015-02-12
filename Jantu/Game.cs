@@ -12,9 +12,11 @@ namespace Jantu
 
         private CageManager _cages;
         private DataManager _data;
+        private Balancing _balance;
         private World _world;
         private int _cash;
         private int _day;
+        private double _dayTime;
 
         /// <summary>
         /// A random number generator that can be used throughout the game.
@@ -76,13 +78,27 @@ namespace Jantu
             }
         }
 
-        public Game(int worldWidth, int worldHeight, Vector2 worldOrigin)
+        public Game(int worldWidth, int worldHeight, Vector2 worldOrigin, Balancing balance, DataManager data)
         {
             Random = new Random();
             _cages = new CageManager();
-            _data = new DataManager();
+            _data = data;
+            _balance = balance;
             _world = new World(this, worldWidth, worldHeight, worldOrigin);
             _cash = _startCash;
+        }
+
+        public void Update(double dt)
+        {
+            World.Update(dt);
+            Cages.Update();
+
+            _dayTime += dt;
+            if (_dayTime >= _balance.DayLength)
+            {
+                ++_day;
+                _dayTime = 0;
+            }
         }
     }
 }

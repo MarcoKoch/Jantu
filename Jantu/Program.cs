@@ -12,8 +12,10 @@ namespace Jantu
         {
             Console.WindowWidth = 100;
             Console.WindowHeight = 60;
-            
-            var game = new Game(Console.WindowWidth - 22, Console.WindowHeight-3,  new Vector2(0,3));
+
+            var data = new DataManager();
+            var balance = new Balancing();
+            var game = new Game(Console.WindowWidth - 22, Console.WindowHeight-3,  new Vector2(0,3), balance, data);
             var menu = new ActionMenu(new Vector2(Console.WindowWidth - 22, 0), 22, 18);
             var menu2 = new InfoBar(game, new Vector2(0,0),  Console.WindowWidth-22, 3);
             var menu3 = new CageMenu(new Vector2(Console.WindowWidth - 22, 18), 22, Console.WindowHeight - 18, game);
@@ -25,7 +27,6 @@ namespace Jantu
 
             // Test code
 
-            var balance = new Balancing();
             var cageType = CageType.ReadFromFile("../../../data/cages/square.cage");
 
             var species = new Species("Cow");
@@ -50,9 +51,7 @@ namespace Jantu
                 double dt = 0.001 * (double) watch.ElapsedMilliseconds;
                 watch.Restart();
 
-                game.Cages.Update();
-                game.World.Update(dt);
-
+                game.Update(dt);
                 ///<summary>
                 ///key input handling
                 ///</summary>
