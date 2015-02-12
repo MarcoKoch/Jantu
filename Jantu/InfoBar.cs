@@ -15,7 +15,8 @@ namespace Jantu
             base(pos, width, height)
         {
             BackgroundColor = ConsoleColor.Gray;
-            TextColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.Black;
+            BorderFgColor = ConsoleColor.Gray;
             _game = game;
         }
 

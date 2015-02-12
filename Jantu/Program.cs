@@ -43,6 +43,8 @@ namespace Jantu
             watch.Start();
             menu.Draw();
             menu2.Draw();
+            menu3.Draw();
+
             while (true)
             {
                 double dt = 0.001 * (double) watch.ElapsedMilliseconds;

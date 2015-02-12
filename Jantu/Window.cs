@@ -7,25 +7,48 @@ namespace Jantu
 {
     class Window
     {
-        private ConsoleColor _bgColor;
+        private ConsoleColor _bgColor = Console.BackgroundColor;
         public ConsoleColor BackgroundColor
         {
             get { return _bgColor; }
             set
             {
                 _bgColor = value;
-                RedrawBackground();
+                _needClear = true;
             }
         }
 
-        private ConsoleColor _borderColor;
-        public ConsoleColor BorderColor
+        private ConsoleColor _fgColor = Console.ForegroundColor;
+
+        public ConsoleColor ForegroundColor
         {
-            get { return _borderColor; }
+            get { return _fgColor; }
             set
             {
-                _borderColor = value;
-                RedrawBorder();
+                _fgColor = value;
+                _needClear = true;
+            }
+        }
+
+        private ConsoleColor _borderBgColor = Console.BackgroundColor;
+        public ConsoleColor BorderBgColor
+        {
+            get { return _borderBgColor; }
+            set
+            {
+                _borderBgColor = value;
+                _needBorderRedraw = true;
+            }
+        }
+
+        private ConsoleColor _borderFgColor = Console.ForegroundColor;
+        public ConsoleColor BorderFgColor
+        {
+            get { return _borderFgColor; }
+            set
+            {
+                _borderFgColor = value;
+                _needBorderRedraw = true;
             }
         }
 
@@ -40,6 +63,9 @@ namespace Jantu
         private char _Border4;
         private char _Border5;
         private char _Border6;
+
+        private bool _needBorderRedraw = true;
+        private bool _needClear = true;
 
         public int Width { get { return _Width; } }
         public int Height { get { return _Height; } }
@@ -58,12 +84,15 @@ namespace Jantu
             _Border4 = '┐';
             _Border5 = '└';
             _Border6 = '┘';
-
-            RedrawBorder();
         }
 
         public  void Draw()
         {
+            if (_needBorderRedraw)
+                RedrawBorder();
+            if (_needClear)
+                Clear();
+
             Console.BackgroundColor = BackgroundColor;
             Console.ForegroundColor = TextColor;
             OnDraw();
@@ -76,12 +105,12 @@ namespace Jantu
 
         private void RedrawBorder()
         {
-            Console.BackgroundColor = BorderColor;
+            Console.BackgroundColor = BorderBgColor;
+            Console.ForegroundColor = BorderFgColor;
 
             // Obere Horizontale
 
             Console.SetCursorPosition(_Position.X, _Position.Y);
-            Console.BackgroundColor = BorderColor;
             Console.Write(_Border3);
             for (int i = 0; _Width - 2 > i; i++)
                 Console.Write(_Border2);
@@ -103,9 +132,11 @@ namespace Jantu
                 Console.SetCursorPosition(_Position.X - 1 + _Width, _Position.Y + y);
                 Console.Write(_Border);
             }
+
+            _needBorderRedraw = false;
         }
 
-        private void RedrawBackground()
+        private void Clear()
         {
             Console.BackgroundColor = BackgroundColor;
             for (int y = _Position.Y + 1; _Position.Y + Height - 1 > y; ++y)
@@ -114,6 +145,8 @@ namespace Jantu
                 for (int i = 0; (Width - 2) > i; ++i)
                     Console.Write(" ");
             }
+
+            _needClear = false;
         }
     }
 }
