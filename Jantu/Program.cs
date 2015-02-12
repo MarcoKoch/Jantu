@@ -30,7 +30,7 @@ namespace Jantu
 
             var species = new Species("Cow");
             species.Symbol = 'c';
-            species.PooPeriod = 12;
+            species.PooPeriod = 2;
 
             var cage = new Cage(cageType, new Vector2(3, 3), game, balance, false);
             game.ActiveCage = cage;
@@ -50,6 +50,7 @@ namespace Jantu
                 double dt = 0.001 * (double) watch.ElapsedMilliseconds;
                 watch.Restart();
 
+                game.Cages.Update();
                 game.World.Update(dt);
 
                 ///<summary>

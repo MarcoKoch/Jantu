@@ -26,10 +26,10 @@ namespace Jantu
              Clear();
 
              Console.SetCursorPosition(Position.X + 1, Position.Y + 1);
-             Console.Write("Cash: " + _game.Cash
-                 + "\tDay: " + _game.Day
-                 + "\tVisitiors: " + _game.Visitors
-                 + "\tAnimals: " + _game.Animals);
+             Console.Write("Konto: " + _game.Cash
+                 + "\tTag: " + _game.Day
+                 + "\tBesucher: " + _game.Visitors
+                 + "\tTiere: " + _game.NumAnimals);
         }
     }
 }

@@ -39,7 +39,6 @@ namespace Jantu
         private List<Tile> _enclosedTiles = new List<Tile>();
         private World _world;
         private Game _game;
-        private Random _random;
 
         public int SpeciesCount
         {
@@ -126,23 +125,26 @@ namespace Jantu
             List<Tile> freeTiles = new List<Tile>();
             foreach (Tile t in SurroundingTiles)
             {
-                if (t.Entity != null)
+                if (t.Entity == null)
                 {
                     freeTiles.Add(t);
                 }
             }
 
-            int index = _random.Next(freeTiles.Count);
-            Tile targetTile = freeTiles[index];
-            targetTile.Entity = newVisitor;
-         }
+            if (freeTiles.Count > 0)
+            {
+                int index = _game.Random.Next(freeTiles.Count);
+                Tile targetTile = freeTiles[index];
+                targetTile.Entity = newVisitor;
+            }
+        }
 
         private void RemoveVisitor()
         {
             if (_visitorList.Count != 0)
             {
 
-                int index = _random.Next(_visitorList.Count);
+                int index = _game.Random.Next(_visitorList.Count);
                 VisitorEntity visitor = _visitorList[index];
 
                 _visitorList.Remove(visitor);

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ActionMenu.cs" />
     <Compile Include="Balancing.cs" />
+    <Compile Include="CageManager.cs" />
     <Compile Include="CageMenu.cs" />
     <Compile Include="Cage.cs" />
     <Compile Include="CageType.cs" />
