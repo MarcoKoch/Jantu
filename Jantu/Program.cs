@@ -49,6 +49,7 @@ namespace Jantu
             while (true)
             {
                 double dt = 0.001 * (double) watch.ElapsedMilliseconds;
+                watch.Restart();
 
                 game.World.Update(dt);
 
@@ -73,7 +74,6 @@ namespace Jantu
 
                 if (1.0 / _fps * 0.001 > dt)
                     Thread.Sleep(Math.Max(0,(int)((long)(1.0 / _fps * 1000.0) - watch.ElapsedMilliseconds)));
-                watch.Restart();
             }
         }
     }
