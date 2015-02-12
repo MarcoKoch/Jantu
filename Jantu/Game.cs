@@ -51,10 +51,7 @@ namespace Jantu
         public int Day
         {
             get { return _day; }
-            set { _day = value; }
         }
-
-        public Cage ActiveCage;
 
         public int NumAnimals
         {

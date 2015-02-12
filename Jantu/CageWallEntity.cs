@@ -21,6 +21,16 @@ namespace Jantu
 
         public override void Draw()
         {
+            switch (_cage.State)
+            {
+                case Cage.DisplayState.Selected:
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case Cage.DisplayState.Preview:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+            }
+
             Console.SetCursorPosition((int)Tile.ConsoleX, (int)Tile.ConsoleY);
             Console.Write(_drawChar);
         }

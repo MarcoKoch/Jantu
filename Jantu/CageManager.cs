@@ -7,6 +7,20 @@ namespace Jantu
 {
     class CageManager
     {
+        private Cage _selectedCage ;
+        public Cage SelectedCage
+        {
+            get { return _selectedCage; }
+            set
+            {
+                if (_selectedCage != null)
+                    _selectedCage.State = Cage.DisplayState.Normal;
+                _selectedCage = value;
+                if (_selectedCage != null)
+                    _selectedCage.State = Cage.DisplayState.Selected;
+            }
+        }
+
         private List<Cage> _cages = new List<Cage>();
         public List<Cage> Cages
         {

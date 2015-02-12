@@ -7,6 +7,15 @@ namespace Jantu
 {
     class Cage
     {
+        public enum DisplayState
+        {
+            Preview,
+            Selected,
+            Normal
+        }
+
+        public DisplayState State;
+
         public int Attractivity
         {
             get
@@ -34,7 +43,6 @@ namespace Jantu
         }
         private CageType _type;
         private Balancing _balance;
-        private bool Preview;
         private List<Tile> _surroundingTiles = new List<Tile>();
         private List<Tile> _enclosedTiles = new List<Tile>();
         private World _world;
@@ -157,7 +165,7 @@ namespace Jantu
         {
             List<Vector2> wallpositions = type.WallPositions;
             _type = type;
-            Preview = preview;
+            State = preview ? DisplayState.Preview : DisplayState.Normal;
             _game = game;
             _balance = balance;
             _world = game.World;

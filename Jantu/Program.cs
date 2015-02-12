@@ -34,7 +34,7 @@ namespace Jantu
             species.PooPeriod = 2;
 
             var cage = new Cage(cageType, new Vector2(3, 3), game, balance, false);
-            game.ActiveCage = cage;
+            game.Cages.SelectedCage = cage;
 
             var cow1 = new AnimalEntity(species);
             var cow2 = new AnimalEntity(species);
