@@ -53,6 +53,8 @@ namespace Jantu
             set { _day = value; }
         }
 
+        public Cage ActiveCage;
+
         public int Animals
         {
             get { return _animals; }

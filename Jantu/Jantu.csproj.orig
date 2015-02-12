@@ -55,7 +55,11 @@
     <Compile Include="PooEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
+    <Compile Include="Showbar.cs" />
     <Compile Include="SpatialAStar.cs" />
+=======
+>>>>>>> origin/Feature_Menu
     <Compile Include="Species.cs" />
     <Compile Include="SpeciesManager.cs" />
     <Compile Include="SpeciesType.cs" />

@@ -11,7 +11,7 @@ namespace Jantu
         static void Main(string[] args)
         {
             Console.BackgroundColor = ConsoleColor.White;
-            Showbar menu = new Showbar();
+            CageMenu menu = new CageMenu();
             Game game = new Game(Console.WindowWidth - 20, Console.WindowHeight-3,  new Vector2(0,3));
             InfoBar menu2 = new InfoBar(game,Console.WindowWidth-22,3);
             Stopwatch watch = new Stopwatch();
