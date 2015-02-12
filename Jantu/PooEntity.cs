@@ -26,5 +26,10 @@ namespace Jantu
             if (Tile != null && Tile.Cage != null)
                 Tile.Cage.AddPoo(this);
         }
+
+        protected override bool OnBlockingQuery()
+        {
+            return true;
+        }
     }
 }
